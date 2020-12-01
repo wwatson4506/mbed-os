@@ -27,14 +27,14 @@ endif()
 
 
 target_include_directories(mbed-storage-blockdevice
-    INTERFACE
+    PUBLIC
         .
         ./include
         ./include/blockdevice
 )
 
 target_sources(mbed-storage-blockdevice
-    INTERFACE
+    PRIVATE
         source/BufferedBlockDevice.cpp
         source/ChainingBlockDevice.cpp
         source/ExhaustibleBlockDevice.cpp
@@ -46,3 +46,7 @@ target_sources(mbed-storage-blockdevice
         source/ReadOnlyBlockDevice.cpp
         source/SlicingBlockDevice.cpp
 )
+
+target_link_libraries(mbed-storage-blockdevice
+    PUBLIC
+    mbed-base-flags)

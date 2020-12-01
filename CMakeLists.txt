@@ -7,12 +7,18 @@ cmake_minimum_required(VERSION 3.19.0 FATAL_ERROR)
 
 include(${MBED_CONFIG_PATH}/mbed_config.cmake)
 
+# Interface library storing all needed flags, definitions, and includes for building with mbed-os.
+# Does NOT include RTOS flags, so by itself it represents mbed-baremetal.
+# It allows all optional modules to get the mbed flags without having to choose baremetal or RTOS specifically.
 add_library(mbed-base-flags INTERFACE)
+
+# RTOS flags only.  Linking mbed-base-flags plus mbed-rtos-flags provides the
+# full-fat Mbed OS experience with the RTOS enabled
 add_library(mbed-rtos-flags INTERFACE)
 
 ### mbed-baremetal
 # private object library to build code
-add_library(mbed-baremetal-obj OBJECT EXCLUDE_FROM_ALL tools/cmake/dummy_cmake.c)
+add_library(mbed-baremetal-obj OBJECT EXCLUDE_FROM_ALL)
 target_link_libraries(mbed-baremetal-obj mbed-base-flags)
 
 # public library containing flags and objects
@@ -22,7 +28,7 @@ target_link_libraries(mbed-baremetal INTERFACE mbed-base-flags)
 
 ### mbed-os (baremetal plus RTOS)
 # private object library to build code
-add_library(mbed-os-obj OBJECT EXCLUDE_FROM_ALL tools/cmake/dummy_cmake.c)
+add_library(mbed-os-obj OBJECT EXCLUDE_FROM_ALL)
 target_link_libraries(mbed-os-obj mbed-base-flags mbed-rtos-flags)
 
 # public library containing flags and objects
@@ -98,7 +104,7 @@ target_include_directories(mbed-base-flags
 # are spread in different directories can be referenced and can be linked against
 # by libraries that depend on them.
 # TODO CMake: Should the source files be moved?
-add_library(mbed-device_key INTERFACE)
+add_library(mbed-device_key OBJECT EXCLUDE_FROM_ALL)
 
 add_subdirectory(cmsis)
 add_subdirectory(drivers)

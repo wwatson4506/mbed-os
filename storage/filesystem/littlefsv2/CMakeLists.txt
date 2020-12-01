@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 target_include_directories(mbed-storage-littlefs-v2
-    INTERFACE
+    PUBLIC
         .
         ./include
         ./include/littlefsv2
@@ -10,7 +10,7 @@ target_include_directories(mbed-storage-littlefs-v2
 )
 
 target_sources(mbed-storage-littlefs-v2
-    INTERFACE
+    PRIVATE
         source/LittleFileSystem2.cpp
 
         littlefs/lfs2.c
@@ -18,7 +18,7 @@ target_sources(mbed-storage-littlefs-v2
 )
 
 target_link_libraries(mbed-storage-littlefs-v2
-    INTERFACE
+    PUBLIC
         mbed-storage-blockdevice
         mbed-storage-filesystem
 )

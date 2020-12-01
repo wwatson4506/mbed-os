@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 target_include_directories(mbed-mbedtls
-    INTERFACE
+    PUBLIC
         .
         ./include
         ./include/mbedtls
@@ -11,7 +11,7 @@ target_include_directories(mbed-mbedtls
 )
 
 target_sources(mbed-mbedtls
-    INTERFACE
+    PRIVATE
         platform/src/mbed_trng.cpp
         platform/src/platform_alt.cpp
         platform/src/shared_rng.cpp
@@ -99,6 +99,6 @@ target_sources(mbed-mbedtls
 )
 
 target_compile_definitions(mbed-mbedtls
-    INTERFACE
+    PUBLIC
         MBED_CONF_MBEDTLS_PRESENT=1
 )

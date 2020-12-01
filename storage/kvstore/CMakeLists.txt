@@ -6,14 +6,14 @@ add_subdirectory(kv_config)
 add_subdirectory(securestore)
 
 target_include_directories(mbed-storage-kvstore
-    INTERFACE
+    PUBLIC
         .
         ./include
         ./include/kvstore
 )
 
 target_sources(mbed-storage-kvstore
-    INTERFACE
+    PRIVATE
         source/FileSystemStore.cpp
         source/KVMap.cpp
         source/TDBStore.cpp
@@ -21,12 +21,13 @@ target_sources(mbed-storage-kvstore
 )
 
 target_link_libraries(mbed-storage-kvstore
-    INTERFACE
-        mbed-device_key
+    PUBLIC
+		mbed-device_key
         mbed-storage-blockdevice
         mbed-storage-filesystem
         mbed-storage-fat
         mbed-storage-littlefs
         mbed-storage-flashiap
         mbed-storage-sd
+		mbed-base-flags
 )

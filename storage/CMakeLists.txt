@@ -4,21 +4,20 @@
 # List of all storage libraries available.
 add_library(mbed-storage INTERFACE)
 
-add_library(mbed-storage-blockdevice INTERFACE)
+add_library(mbed-storage-blockdevice OBJECT EXCLUDE_FROM_ALL)
 add_library(mbed-storage-dataflash INTERFACE)
-add_library(mbed-storage-flashiap INTERFACE)
+add_library(mbed-storage-flashiap OBJECT EXCLUDE_FROM_ALL)
 add_library(mbed-storage-i2cee INTERFACE)
 add_library(mbed-storage-qspif INTERFACE)
 add_library(mbed-storage-sd INTERFACE)
 add_library(mbed-storage-spif INTERFACE)
 
-add_library(mbed-storage-filesystem INTERFACE)
-add_library(mbed-storage-littlefs-v2 INTERFACE)
-add_library(mbed-storage-littlefs INTERFACE)
-add_library(mbed-storage-fat INTERFACE)
+add_library(mbed-storage-filesystem OBJECT EXCLUDE_FROM_ALL)
+add_library(mbed-storage-littlefs-v2 OBJECT EXCLUDE_FROM_ALL)
+add_library(mbed-storage-littlefs OBJECT EXCLUDE_FROM_ALL)
+add_library(mbed-storage-fat OBJECT EXCLUDE_FROM_ALL)
 
-add_library(mbed-storage-kvstore INTERFACE)
-
+add_library(mbed-storage-kvstore OBJECT EXCLUDE_FROM_ALL)
 
 add_subdirectory(blockdevice)
 add_subdirectory(filesystem)

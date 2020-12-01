@@ -2,13 +2,13 @@
 # SPDX-License-Identifier: Apache-2.0
 
 target_include_directories(mbed-storage-kvstore
-    INTERFACE
+    PUBLIC
         .
         ./include
         ./include/direct_access_devicekey
 )
 
 target_sources(mbed-storage-kvstore
-    INTERFACE
+    PRIVATE
         source/DirectAccessDevicekey.cpp
 )

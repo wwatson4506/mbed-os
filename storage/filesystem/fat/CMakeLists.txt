@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 target_include_directories(mbed-storage-fat
-    INTERFACE
+    PUBLIC
         .
         ./include
         ./include/fat
@@ -10,9 +10,13 @@ target_include_directories(mbed-storage-fat
 )
 
 target_sources(mbed-storage-fat
-    INTERFACE
+    PRIVATE
         source/FATFileSystem.cpp
 
         ChaN/ff.cpp
         ChaN/ffunicode.cpp
 )
+
+target_link_libraries(mbed-storage-fat
+	PUBLIC
+	mbed-storage-filesystem)
