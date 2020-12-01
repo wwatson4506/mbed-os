@@ -9,8 +9,7 @@ elseif("NUCLEO_F072RB" IN_LIST MBED_TARGET_LABELS)
     add_subdirectory(TARGET_NUCLEO_F072RB)
 endif()
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj PRIVATE
         analogin_device.c
         analogout_device.c
         flash_api.c
@@ -78,7 +77,7 @@ target_sources(mbed-core
         device/system_stm32f0xx.c
 )
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         .
         device

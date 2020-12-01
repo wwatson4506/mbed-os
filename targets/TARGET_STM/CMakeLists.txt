@@ -31,13 +31,12 @@ elseif("STM32WB" IN_LIST MBED_TARGET_LABELS)
     add_subdirectory(TARGET_STM32WB)
 endif()
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         .
 )
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj PRIVATE
         USBPhy_STM32.cpp
         analogin_api.c
         analogout_api.c

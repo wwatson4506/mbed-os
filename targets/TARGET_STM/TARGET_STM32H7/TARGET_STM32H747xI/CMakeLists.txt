@@ -9,7 +9,6 @@ elseif("STM32H7A3xIQ" IN_LIST MBED_TARGET_LABELS)
     add_subdirectory(TARGET_STM32H7A3xIQ)
 endif()
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj PRIVATE
         system_clock.c
 )

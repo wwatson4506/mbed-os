@@ -5,7 +5,7 @@ if("FVP_MPS2" IN_LIST MBED_TARGET_LABELS)
     add_subdirectory(TARGET_FVP_MPS2)
 endif()
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         .
 )

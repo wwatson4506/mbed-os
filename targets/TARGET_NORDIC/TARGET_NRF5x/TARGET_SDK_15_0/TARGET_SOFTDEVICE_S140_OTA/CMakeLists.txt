@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         ./headers
         ./headers/nrf52

@@ -9,8 +9,7 @@ endif()
 
 add_subdirectory(STM32Cube_FW)
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj PRIVATE
         analogin_device.c
         analogout_device.c
         flash_api.c
@@ -20,7 +19,7 @@ target_sources(mbed-core
         spi_api.c
 )
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         .
 )

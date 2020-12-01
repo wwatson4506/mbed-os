@@ -21,13 +21,13 @@ if("FRAMEWORK_5_3_3" IN_LIST MBED_TARGET_LABELS)
     add_subdirectory(middleware/wireless/TARGET_FRAMEWORK_5_3_3)
 endif()
 
-target_include_directories(mbed-core
-    INTERFACE
+target_include_directories(mbed-base-flags
+    PUBLIC
         api
 )
 
 target_sources(mbed-core
-    INTERFACE
+    PRIVATE
         fsl_common.c
 
         api/analogin_api.c
@@ -44,3 +44,4 @@ target_sources(mbed-core
         api/rtc_api.c
         api/sleep.c
 )
+

@@ -49,7 +49,7 @@ Breaking the dependencies would be a huge effort and it possibly would result in
 
 CMake provides OBJECT libraries but it does not support circular dependencies that we have in our tree. Therefore we build Mbed OS as whole (all object files combined).
 
-## One object library "mbed-core"
+## One object library "mbed-base-flags"
 
 Our current approach on feature-cmake branch is to use OBJECT libraries. We built almost entire tree of Mbed OS, the number of object files is big. As result building take longer and we have again windows path limitation (one file compilation command is more than 43k characters long).
 
@@ -61,7 +61,7 @@ These bugs will be fixed eventually. However, we still have not addressed the ma
 
 ## Only core libraries built as objects
 
-These components would form mbed-core library built as OBJECT library in CMake:
+These components would form mbed-base-flags library built as OBJECT library in CMake:
 - cmsis
 - events
 - rtos-api
@@ -92,11 +92,11 @@ Mbed 2 was released as a library, we provided object files for files that were p
 
 ## External components
 
-They can be either object or static library. Only one limitation due to selecting object library is that any component linked by an application shall not have circular dependencies between the components (CMake will issue an error that we are linking with an object library (`mbed-core`) and it does not support it - this will be fixed but no ETA given).
+They can be either object or static library. Only one limitation due to selecting object library is that any component linked by an application shall not have circular dependencies between the components (CMake will issue an error that we are linking with an object library (`mbed-base-flags`) and it does not support it - this will be fixed but no ETA given).
 
 ## Solution: Mbed-os components
 
-mbed-core component (object library) consists of:
+mbed-base-flags component (object library) consists of:
 - cmsis
 - events
 - rtos-api
@@ -132,5 +132,5 @@ target_link_libraries(mbed-nanostack INTERFACE mbed-nanostack-libservice mbed-ne
 An application just links to what is required:
 
 ```
-target_link_libraries(mbed-os-example-nanostack-example mbed-nanostack mbed-core)
+target_link_libraries(mbed-os-example-nanostack-example mbed-nanostack mbed-base-flags)
 ```

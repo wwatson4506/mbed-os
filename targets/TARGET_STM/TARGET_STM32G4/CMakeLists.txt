@@ -17,8 +17,7 @@ elseif("STM32G484xE" IN_LIST MBED_TARGET_LABELS)
     add_subdirectory(TARGET_STM32G484xE)
 endif()
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj PRIVATE
         analogin_device.c
         analogout_device.c
         flash_api.c
@@ -30,7 +29,7 @@ target_sources(mbed-core
 
 add_subdirectory(STM32Cube_FW)
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         .
 )

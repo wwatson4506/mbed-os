@@ -9,7 +9,7 @@ function(_mbed_get_assembly_stm32f439xi)
     elseif(${MBED_TOOLCHAIN} STREQUAL "IAR")
         set(STARTUP_FILE TOOLCHAIN_IAR/startup_stm32f439xx.S)
     endif()
-    target_sources(mbed-core INTERFACE ${STARTUP_FILE})
+    target_sources(mbed-base-flags INTERFACE ${STARTUP_FILE})
 endfunction()
 
 function(_mbed_set_linker_file)
@@ -34,7 +34,7 @@ elseif("WIO_BG96" IN_LIST MBED_TARGET_LABELS)
     add_subdirectory(TARGET_WIO_BG96)
 endif()
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         .
 )

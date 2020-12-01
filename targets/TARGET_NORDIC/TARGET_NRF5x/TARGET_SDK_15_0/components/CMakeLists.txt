@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         ./libraries
         ./libraries/atomic
@@ -22,8 +22,7 @@ target_include_directories(mbed-core
         ./libraries/util
 )
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj PRIVATE
         libraries/atomic/nrf_atomic.c
 
         libraries/atomic_fifo/nrf_atfifo.c

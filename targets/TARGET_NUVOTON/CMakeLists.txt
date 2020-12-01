@@ -17,13 +17,12 @@ elseif("NUC472" IN_LIST MBED_TARGET_LABELS)
     add_subdirectory(TARGET_NUC472)
 endif()
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         .
 )
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj PRIVATE
         nu_miscutil.c
         nu_modutil.c
         nu_timer.c

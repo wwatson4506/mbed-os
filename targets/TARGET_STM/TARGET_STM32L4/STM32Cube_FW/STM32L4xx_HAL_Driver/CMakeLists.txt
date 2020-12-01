@@ -3,13 +3,12 @@
 
 add_subdirectory(Legacy)
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         .
 )
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj PRIVATE
         stm32l4xx_hal_adc.c
         stm32l4xx_hal_adc_ex.c
         stm32l4xx_hal.c

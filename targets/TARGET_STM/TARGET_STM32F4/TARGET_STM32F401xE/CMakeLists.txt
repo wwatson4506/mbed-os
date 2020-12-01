@@ -15,12 +15,11 @@ if("NUCLEO_F401RE" IN_LIST MBED_TARGET_LABELS)
     add_subdirectory(TARGET_NUCLEO_F401RE)
 endif()
 
-target_sources(mbed-core
-    INTERFACE 
+target_sources(mbed-baremetal-obj PRIVATE
         ${STARTUP_FILE}
 )
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         .
 )

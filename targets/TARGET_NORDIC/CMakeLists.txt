@@ -5,7 +5,7 @@ if("NRF5x" IN_LIST MBED_TARGET_LABELS)
     add_subdirectory(TARGET_NRF5x)
 endif()
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         .
 )

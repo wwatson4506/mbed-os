@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         ./ble
         ./ble/ble_radio_notification
@@ -11,8 +11,7 @@ target_include_directories(mbed-core
         ./libraries/fstorage
 )
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj PRIVATE
         ble/ble_radio_notification/ble_radio_notification.c
 
         libraries/bootloader/dfu/nrf_dfu_mbr.c

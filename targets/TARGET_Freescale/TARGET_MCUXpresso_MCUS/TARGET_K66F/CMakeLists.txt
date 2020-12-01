@@ -31,15 +31,14 @@ set_property(
         ${CMAKE_CURRENT_SOURCE_DIR}/${LINKER_FILE}
 )
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         .
         device
         drivers
 )
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj PRIVATE
         pwmout_api.c
         serial_api.c
         spi_api.c

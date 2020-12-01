@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         ./headers
         ./libraries
@@ -10,8 +10,7 @@ target_include_directories(mbed-core
         ./nrf_soc_nosd
 )
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj PRIVATE
         libraries/fstorage/nrf_fstorage_nvmc.c
         nrf_soc_nosd/nrf_nvic.c
         nrf_soc_nosd/nrf_soc.c

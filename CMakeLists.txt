@@ -7,22 +7,29 @@ cmake_minimum_required(VERSION 3.19.0 FATAL_ERROR)
 
 include(${MBED_CONFIG_PATH}/mbed_config.cmake)
 
-add_library(mbed-core INTERFACE)
+add_library(mbed-base-flags INTERFACE)
+add_library(mbed-rtos-flags INTERFACE)
 
-add_library(mbed-os INTERFACE)
+### mbed-baremetal
+# private object library to build code
+add_library(mbed-baremetal-obj OBJECT EXCLUDE_FROM_ALL tools/cmake/dummy_cmake.c)
+target_link_libraries(mbed-baremetal-obj mbed-base-flags)
 
-target_link_libraries(mbed-os
-    INTERFACE
-        mbed-rtos
-        mbed-core
-)
-
+# public library containing flags and objects
 add_library(mbed-baremetal INTERFACE)
+target_sources(mbed-baremetal INTERFACE $<TARGET_OBJECTS:mbed-baremetal-obj>)
+target_link_libraries(mbed-baremetal INTERFACE mbed-base-flags)
 
-target_link_libraries(mbed-baremetal
-    INTERFACE
-        mbed-core
-)
+### mbed-os (baremetal plus RTOS)
+# private object library to build code
+add_library(mbed-os-obj OBJECT EXCLUDE_FROM_ALL tools/cmake/dummy_cmake.c)
+target_link_libraries(mbed-os-obj mbed-base-flags mbed-rtos-flags)
+
+# public library containing flags and objects
+add_library(mbed-os INTERFACE)
+target_sources(mbed-os INTERFACE $<TARGET_OBJECTS:mbed-os-obj>)
+target_link_libraries(mbed-os INTERFACE mbed-base-flags mbed-rtos-flags)
+
 
 # Validate selected C library type
 # The C library type selected has to match the library that the target can support
@@ -52,14 +59,14 @@ if(NOT ${MBED_PRINTF_LIB} IN_LIST MBED_PRINTF_LIB_TYPES)
     )
 endif()
 
-mbed_set_cpu_core_definitions(mbed-core)
+mbed_set_cpu_core_definitions(mbed-base-flags)
 if(${MBED_TOOLCHAIN_FILE_USED})
-    mbed_set_profile_options(mbed-core ${MBED_TOOLCHAIN})
-    mbed_set_c_lib(mbed-core ${MBED_C_LIB})
-    mbed_set_printf_lib(mbed-core ${MBED_PRINTF_LIB})
+    mbed_set_profile_options(mbed-base-flags ${MBED_TOOLCHAIN})
+    mbed_set_c_lib(mbed-base-flags ${MBED_C_LIB})
+    mbed_set_printf_lib(mbed-base-flags ${MBED_PRINTF_LIB})
 endif()
 
-target_compile_definitions(mbed-core
+target_compile_definitions(mbed-base-flags
     INTERFACE
         ${MBED_TARGET_DEFINITIONS}
         ${MBED_CONFIG_DEFINITIONS}
@@ -69,20 +76,20 @@ target_compile_definitions(mbed-core
 # supported. New source files should instead check for __GNUC__ and __clang__
 # for the GCC_ARM and ARM toolchains respectively. 
 if(${MBED_TOOLCHAIN} STREQUAL "GCC_ARM")
-    target_compile_definitions(mbed-core
+    target_compile_definitions(mbed-base-flags
         INTERFACE
             TOOLCHAIN_GCC_ARM
             TOOLCHAIN_GCC
     )
 elseif(${MBED_TOOLCHAIN} STREQUAL "ARM")
-    target_compile_definitions(mbed-core
+    target_compile_definitions(mbed-base-flags
         INTERFACE
             TOOLCHAIN_ARM
     )
 endif()
 
 # Include mbed.h and config from generate folder
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}
 )
@@ -92,7 +99,6 @@ target_include_directories(mbed-core
 # by libraries that depend on them.
 # TODO CMake: Should the source files be moved?
 add_library(mbed-device_key INTERFACE)
-add_library(mbed-rtos INTERFACE)
 
 add_subdirectory(cmsis)
 add_subdirectory(drivers)
@@ -111,6 +117,10 @@ add_subdirectory(features EXCLUDE_FROM_ALL)
 add_subdirectory(platform/FEATURE_EXPERIMENTAL_API EXCLUDE_FROM_ALL)
 add_subdirectory(cmsis/CMSIS_5/CMSIS/RTOS2 EXCLUDE_FROM_ALL)
 add_subdirectory(cmsis/device/rtos EXCLUDE_FROM_ALL)
+
+# copy all baremetal sources to mbed-os
+get_property(MBED_BAREMETAL_SOURCES TARGET mbed-baremetal-obj PROPERTY SOURCES)
+target_sources(mbed-os-obj PRIVATE ${MBED_BAREMETAL_SOURCES})
 
 #
 # Configures the application
@@ -138,14 +148,14 @@ function(mbed_set_mbed_target_linker_script target)
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
             BYPRODUCTS "${CMAKE_BINARY_DIR}/${target}.link_script.ld"
         )
-        target_link_options(mbed-core
-            INTERFACE
-                "-T" "${CMAKE_BINARY_DIR}/${target}.link_script.ld"
-                "-Wl,-Map=${CMAKE_BINARY_DIR}/${target}.map"
-        )
+
+        target_link_options(${target} PRIVATE
+            "-T" "${CMAKE_BINARY_DIR}/${target}.link_script.ld"
+            "-Wl,-Map=$<TARGET_FILE:${target}>.map")
+
     elseif(MBED_TOOLCHAIN STREQUAL "ARM")
         set(CMAKE_PRE_BUILD_COMMAND COMMAND "")
-        target_link_options(mbed-core
+        target_link_options(mbed-base-flags
             INTERFACE
                 "--scatter=${mbed_target_linker_script}"
                 "--predefine=${_linker_preprocess_definitions}"
@@ -204,7 +214,7 @@ function(mbed_generate_map_file target)
          TARGET
              ${target}
          POST_BUILD
-         COMMAND ${Python3_EXECUTABLE} ${MBED_PATH}/tools/memap.py -t ${MBED_TOOLCHAIN} ${CMAKE_BINARY_DIR}/${target}${CMAKE_EXECUTABLE_SUFFIX}.map
+         COMMAND ${Python3_EXECUTABLE} ${MBED_PATH}/tools/memap.py -t ${MBED_TOOLCHAIN} $<TARGET_FILE:${target}>.map
          WORKING_DIRECTORY
              ${CMAKE_BINARY_DIR}
          COMMENT

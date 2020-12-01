@@ -11,13 +11,12 @@ elseif("SDK_15_0" IN_LIST MBED_TARGET_LABELS)
     add_subdirectory(TARGET_SDK_15_0)
 endif()
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         .
 )
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj PRIVATE
         lp_ticker.c
         pinmap.c
         port_api.c

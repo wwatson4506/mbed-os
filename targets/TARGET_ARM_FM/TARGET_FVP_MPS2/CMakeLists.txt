@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 if("FVP_MPS2_M0" IN_LIST MBED_TARGET_LABELS)
-    target_include_directories(mbed-core
+    target_include_directories(mbed-base-flags
         INTERFACE
             TARGET_FVP_MPS2_M0/device
     )
@@ -17,7 +17,7 @@ if("FVP_MPS2_M0" IN_LIST MBED_TARGET_LABELS)
         set(STARTUP_FILE TARGET_FVP_MPS2_M0/device/TOOLCHAIN_GCC_ARM/startup_MPS2.S)
     endif()
 elseif("FVP_MPS2_M0P" IN_LIST MBED_TARGET_LABELS)
-    target_include_directories(mbed-core
+    target_include_directories(mbed-base-flags
         INTERFACE
             TARGET_FVP_MPS2_M0P/device
     )
@@ -32,7 +32,7 @@ elseif("FVP_MPS2_M0P" IN_LIST MBED_TARGET_LABELS)
         set(STARTUP_FILE TARGET_FVP_MPS2_M0P/device/TOOLCHAIN_GCC_ARM/startup_MPS2.S)
     endif()
 elseif("FVP_MPS2_M3" IN_LIST MBED_TARGET_LABELS)
-    target_include_directories(mbed-core
+    target_include_directories(mbed-base-flags
         INTERFACE
             TARGET_FVP_MPS2_M3/device
     )
@@ -47,7 +47,7 @@ elseif("FVP_MPS2_M3" IN_LIST MBED_TARGET_LABELS)
         set(STARTUP_FILE TARGET_FVP_MPS2_M3/device/TOOLCHAIN_GCC_ARM/startup_MPS2.S)
     endif()
 elseif("FVP_MPS2_M4" IN_LIST MBED_TARGET_LABELS)
-    target_include_directories(mbed-core
+    target_include_directories(mbed-base-flags
         INTERFACE
             TARGET_FVP_MPS2_M4/device
     )
@@ -62,7 +62,7 @@ elseif("FVP_MPS2_M4" IN_LIST MBED_TARGET_LABELS)
         set(STARTUP_FILE TARGET_FVP_MPS2_M4/device/TOOLCHAIN_GCC_ARM/startup_MPS2.S)
     endif()
 elseif("FVP_MPS2_M7" IN_LIST MBED_TARGET_LABELS)
-    target_include_directories(mbed-core
+    target_include_directories(mbed-base-flags
         INTERFACE
             TARGET_FVP_MPS2_M7/device
     )
@@ -80,15 +80,14 @@ endif()
 
 set_property(GLOBAL PROPERTY MBED_TARGET_LINKER_FILE ${CMAKE_CURRENT_SOURCE_DIR}/${LINKER_FILE})
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         .
         drivers
         SDK
 )
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj PRIVATE
         analogin_api.c
         flash_api.c
         gpio_api.c

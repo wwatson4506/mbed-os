@@ -1,8 +1,7 @@
 # Copyright (c) 2020 ARM Limited. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj PRIVATE
         system_stm32f7xx.c
 
         STM32F7xx_HAL_Driver/Legacy/stm32f7xx_hal_can_legacy.c
@@ -97,7 +96,7 @@ target_sources(mbed-core
 
 )
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         .
         CMSIS

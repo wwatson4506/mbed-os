@@ -11,7 +11,6 @@ endif()
 
 add_subdirectory(device)
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj PRIVATE
         wait_ns.c
 )

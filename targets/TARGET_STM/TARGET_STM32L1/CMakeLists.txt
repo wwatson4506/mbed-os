@@ -9,8 +9,7 @@ elseif("XDOT_L151CC" IN_LIST MBED_TARGET_LABELS)
     add_subdirectory(TARGET_XDOT_L151CC)
 endif()
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj PRIVATE
         analogin_device.c
         analogout_device.c
         flash_api.c
@@ -81,7 +80,7 @@ target_sources(mbed-core
         device/system_stm32l1xx.c
 )
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         .
         device

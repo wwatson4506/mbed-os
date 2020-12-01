@@ -7,8 +7,7 @@ elseif("STM32F103xB" IN_LIST MBED_TARGET_LABELS)
     add_subdirectory(TARGET_STM32F103xB)    
 endif()
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj PRIVATE
         analogin_device.c
         flash_api.c
         gpio_irq_device.c
@@ -19,7 +18,7 @@ target_sources(mbed-core
 
 add_subdirectory(STM32Cube_FW)
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         .
 )

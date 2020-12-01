@@ -10,8 +10,7 @@ elseif("SDT64B" IN_LIST MBED_TARGET_LABELS)
     add_subdirectory(TARGET_SDT64B)
 endif()
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj PRIVATE
         mbed_crc_api.c
         pwmout_api.c
         reset_reason.c
@@ -60,7 +59,7 @@ target_sources(mbed-core
         drivers/fsl_wdog.c
 )
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         .
         drivers

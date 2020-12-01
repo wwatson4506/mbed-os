@@ -5,14 +5,13 @@ if("NRF52840_DK" IN_LIST MBED_TARGET_LABELS)
     add_subdirectory(TARGET_NRF52840_DK)
 endif()
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         .
         ./config
 )
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj PRIVATE
         PeripheralPins.c
         USBPhy_Nordic.cpp
 )

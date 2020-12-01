@@ -9,8 +9,7 @@ elseif("NU_PFM_M2351" IN_LIST MBED_TARGET_LABELS)
     add_subdirectory(TARGET_NU_PFM_M2351)
 endif()
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj PRIVATE
         dma_api.c
         flash_api.c
         gpio_api.c
@@ -80,7 +79,7 @@ target_sources(mbed-core
         device/startup_M2351.c
 )
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         .
         device

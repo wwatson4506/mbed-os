@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj PRIVATE
         crc.c
         fsl_clock_config.c
         fsl_phy.c
@@ -9,7 +8,7 @@ target_sources(mbed-core
         PeripheralPins.c
 )
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         .
 )

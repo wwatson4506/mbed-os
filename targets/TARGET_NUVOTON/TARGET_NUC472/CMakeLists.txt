@@ -17,8 +17,7 @@ endif()
 
 set_property(GLOBAL PROPERTY MBED_TARGET_LINKER_FILE ${CMAKE_CURRENT_SOURCE_DIR}/${LINKER_FILE})
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj PRIVATE
         crypto/crypto-misc.cpp
 
         analogin_api.c
@@ -74,7 +73,7 @@ target_sources(mbed-core
         watchdog_api.c
 )
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         .
         crypto

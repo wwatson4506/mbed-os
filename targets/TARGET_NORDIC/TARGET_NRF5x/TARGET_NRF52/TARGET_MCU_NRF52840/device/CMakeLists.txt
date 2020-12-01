@@ -14,13 +14,12 @@ endif()
 
 set_property(GLOBAL PROPERTY MBED_TARGET_LINKER_FILE ${LINKER_FILE})
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         .
 )
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj PRIVATE
         ${STARTUP_FILE}
         cmsis_nvic.c
         system_nrf52840.c

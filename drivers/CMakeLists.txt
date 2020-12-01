@@ -1,7 +1,7 @@
 # Copyright (c) 2020 ARM Limited. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         .
         ./include
@@ -9,8 +9,7 @@ target_include_directories(mbed-core
         ./include/drivers/internal
 )
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj PRIVATE
         source/AnalogIn.cpp
         source/AnalogOut.cpp
         source/BufferedSerial.cpp

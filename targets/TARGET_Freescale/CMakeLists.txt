@@ -7,12 +7,11 @@ elseif("MCUXpresso_MCUS" IN_LIST MBED_TARGET_LABELS)
     add_subdirectory(TARGET_MCUXpresso_MCUS)
 endif()
 
-target_include_directories(mbed-core
+target_include_directories(mbed-base-flags
     INTERFACE
         .
 )
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj PRIVATE
         USBPhy_Kinetis.cpp
 )
