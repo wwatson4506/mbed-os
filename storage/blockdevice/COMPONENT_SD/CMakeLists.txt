@@ -2,12 +2,12 @@
 # SPDX-License-Identifier: Apache-2.0
 
 target_sources(mbed-storage-sd
-    INTERFACE
+    PRIVATE
         source/SDBlockDevice.cpp
 )
 
 target_include_directories(mbed-storage-sd
-    INTERFACE
+    PUBLIC
         include
         include/SD
 )

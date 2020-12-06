@@ -8,7 +8,7 @@ function(_mbed_get_assembly_k64f)
     elseif(${MBED_TOOLCHAIN} STREQUAL "IAR")
         set(STARTUP_FILE TOOLCHAIN_IAR/startup_MK64F12.S)
     endif()
-    target_sources(mbed-base-flags INTERFACE ${STARTUP_FILE})
+    target_sources(mbed-baremetal-obj PRIVATE ${STARTUP_FILE})
 endfunction()
 
 function(_mbed_set_linker_file)

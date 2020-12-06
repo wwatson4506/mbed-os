@@ -146,18 +146,22 @@ endfunction()
 function(mbed_set_mbed_target_linker_script target)
     get_property(mbed_target_linker_script GLOBAL PROPERTY MBED_TARGET_LINKER_FILE)
     mbed_generate_options_for_linker(${target} _linker_preprocess_definitions)
+
+    set(TARGET_BASE_FILENAME ${CMAKE_CURRENT_BINARY_DIR}/${target})
+
     if(MBED_TOOLCHAIN STREQUAL "GCC_ARM")
+
         set(CMAKE_PRE_BUILD_COMMAND
             COMMAND "arm-none-eabi-cpp" ${_linker_preprocess_definitions} -x assembler-with-cpp -E -Wp,-P
-                ${mbed_target_linker_script} -o ${CMAKE_BINARY_DIR}/${target}.link_script.ld
+                ${mbed_target_linker_script} -o ${TARGET_BASE_FILENAME}.link_script.ld
 
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-            BYPRODUCTS "${CMAKE_BINARY_DIR}/${target}.link_script.ld"
+            BYPRODUCTS "${TARGET_BASE_FILENAME}.link_script.ld"
         )
 
         target_link_options(${target} PRIVATE
-            "-T" "${CMAKE_BINARY_DIR}/${target}.link_script.ld"
-            "-Wl,-Map=$<TARGET_FILE:${target}>.map")
+            "-T" "${TARGET_BASE_FILENAME}.link_script.ld"
+            "-Wl,-Map=${TARGET_BASE_FILENAME}.map")
 
     elseif(MBED_TOOLCHAIN STREQUAL "ARM")
         set(CMAKE_PRE_BUILD_COMMAND COMMAND "")

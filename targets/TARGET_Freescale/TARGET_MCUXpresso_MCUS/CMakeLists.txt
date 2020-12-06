@@ -22,11 +22,11 @@ if("FRAMEWORK_5_3_3" IN_LIST MBED_TARGET_LABELS)
 endif()
 
 target_include_directories(mbed-base-flags
-    PUBLIC
+    INTERFACE
         api
 )
 
-target_sources(mbed-core
+target_sources(mbed-baremetal-obj
     PRIVATE
         fsl_common.c
 
