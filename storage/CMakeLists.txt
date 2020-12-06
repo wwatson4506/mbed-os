@@ -9,7 +9,11 @@ add_library(mbed-storage-dataflash INTERFACE)
 add_library(mbed-storage-flashiap OBJECT EXCLUDE_FROM_ALL)
 add_library(mbed-storage-i2cee INTERFACE)
 add_library(mbed-storage-qspif INTERFACE)
-add_library(mbed-storage-sd OBJECT EXCLUDE_FROM_ALL)
+
+if("SD" IN_LIST MBED_TARGET_LABELS)
+	add_library(mbed-storage-sd OBJECT EXCLUDE_FROM_ALL)
+endif()
+
 add_library(mbed-storage-spif INTERFACE)
 
 add_library(mbed-storage-filesystem OBJECT EXCLUDE_FROM_ALL)
