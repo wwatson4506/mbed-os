@@ -1,14 +1,14 @@
 # Copyright (c) 2020 ARM Limited. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
+if(MBED_OS_ENABLE_TESTS)
     if(NOT BUILD_GREENTEA_TESTS)
         add_subdirectory(tests/UNITTESTS)
     endif()
 endif()
 
 target_include_directories(mbed-mbedtls
-    INTERFACE
+    PUBLIC
         .
         ./include
         ./include/mbedtls
@@ -17,7 +17,7 @@ target_include_directories(mbed-mbedtls
 )
 
 target_sources(mbed-mbedtls
-    INTERFACE
+    PRIVATE
         platform/src/hash_wrappers.c
         platform/src/mbed_trng.cpp
         platform/src/platform_alt.cpp
@@ -107,7 +107,7 @@ target_sources(mbed-mbedtls
 )
 
 target_compile_definitions(mbed-mbedtls
-    INTERFACE
+    PUBLIC
         MBED_CONF_MBEDTLS_PRESENT=1
 )
 
@@ -123,7 +123,7 @@ set(partial-thumb2-cores
 )
 if(MBED_CPU_CORE IN_LIST partial-thumb2-cores)
     target_compile_definitions(mbed-mbedtls
-        INTERFACE
+        PUBLIC
             MULADDC_CANNOT_USE_R7
     )
 endif()

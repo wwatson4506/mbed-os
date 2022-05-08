@@ -5653,6 +5653,9 @@
             "SLEEP",
             "USTICKER"
         ],
+        "device_has_remove": [
+            "TRNG"
+        ],
         "macros_add": [
             "__STARTUP_CLEAR_BSS",
             "MBED_FAULT_HANDLER_DISABLED",

@@ -1,7 +1,7 @@
 # Copyright (c) 2020 ARM Limited. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
+if(MBED_OS_ENABLE_TESTS)
     if(BUILD_GREENTEA_TESTS)
         add_subdirectory(tests/TESTS)
     else()
@@ -9,7 +9,7 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
     endif()
 endif()
 
-target_include_directories(mbed-core
+target_include_directories(mbed-core-flags
     INTERFACE
         .
         ./include
@@ -17,7 +17,7 @@ target_include_directories(mbed-core
         ./include/drivers/internal
 )
 
-target_sources(mbed-core
+target_sources(mbed-core-sources
     INTERFACE
         source/AnalogIn.cpp
         source/AnalogOut.cpp

@@ -1,9 +1,9 @@
 # Copyright (c) 2020-2021 ARM Limited. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
+if(MBED_OS_ENABLE_TESTS)
     if(BUILD_GREENTEA_TESTS)
-        # add greentea test
+        add_subdirectory(tests/TESTS)
     else()
         add_subdirectory(tests/UNITTESTS)
     endif()
@@ -13,13 +13,13 @@ add_subdirectory(TARGET_FLASH_CMSIS_ALGO EXCLUDE_FROM_ALL)
 
 add_subdirectory(usb)
 
-target_include_directories(mbed-core
+target_include_directories(mbed-core-flags
     INTERFACE
         include
         include/hal
 )
 
-target_sources(mbed-core
+target_sources(mbed-core-sources
     INTERFACE
         source/LowPowerTickerWrapper.cpp
         source/mbed_compat.c

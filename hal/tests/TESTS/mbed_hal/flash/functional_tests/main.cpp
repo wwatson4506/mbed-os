@@ -44,17 +44,6 @@ using namespace utest::v1;
 
 static int timer_diff_start;
 
-static void erase_range(flash_t *flash, uint32_t addr, uint32_t size)
-{
-    while (size > 0) {
-        uint32_t sector_size = flash_get_sector_size(flash, addr);
-        TEST_ASSERT_NOT_EQUAL(0, sector_size);
-        int32_t ret = flash_erase_sector(flash, addr);
-        TEST_ASSERT_EQUAL_INT32(0, ret);
-        addr += sector_size;
-        size = size > sector_size ? size - sector_size : 0;
-    }
-}
 #if defined (__ICCARM__)
 MBED_NOINLINE
 static void delay_loop(uint32_t count)
@@ -102,7 +91,7 @@ static int time_cpu_cycles(uint32_t cycles)
 
     core_util_critical_section_exit();
 
-    return timer.read_us();
+    return std::chrono::duration_cast<std::chrono::microseconds>(timer.elapsed_time()).count();
 }
 
 void flash_init_test()

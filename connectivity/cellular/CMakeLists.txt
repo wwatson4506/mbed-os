@@ -1,7 +1,7 @@
 # Copyright (c) 2020 ARM Limited. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
+if(MBED_OS_ENABLE_TESTS)
     if(BUILD_GREENTEA_TESTS)
         # add greentea test
     else()
@@ -31,5 +31,5 @@ target_compile_definitions(mbed-cellular
 target_link_libraries(mbed-cellular
     INTERFACE
         mbed-netsocket
-        mbed-core
+        mbed-core-flags
 )
