@@ -9,10 +9,12 @@ if(MBED_OS_ENABLE_TESTS)
     endif()
 endif()
 
+add_library(mbed-cellular STATIC EXCLUDE_FROM_ALL)
+
 add_subdirectory(source/framework)
 
 target_include_directories(mbed-cellular
-    INTERFACE
+    PUBLIC
         .
         ./include
         ./include/cellular
@@ -24,12 +26,18 @@ target_include_directories(mbed-cellular
 )
 
 target_compile_definitions(mbed-cellular
-    INTERFACE
+    PUBLIC
         MBED_CONF_CELLULAR_PRESENT=1
 )
 
+target_sources(mbed-cellular
+    PRIVATE
+        source/CellularNonIPSocket.cpp
+)
+
 target_link_libraries(mbed-cellular
-    INTERFACE
-        mbed-netsocket
+    PUBLIC
+        mbed-netsocket-api
         mbed-core-flags
+        mbed-randlib
 )

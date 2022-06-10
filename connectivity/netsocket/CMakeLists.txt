@@ -3,27 +3,23 @@
 
 if(MBED_OS_ENABLE_TESTS)
     if(BUILD_GREENTEA_TESTS)
-        # add greentea test
+        add_subdirectory(tests/TESTS)
     else()
         add_subdirectory(tests/UNITTESTS)
     endif()
 endif()
 
-# TODO CMake: Perhaps move this/these file(s) into connectivity/drivers/cellular
-target_sources(mbed-cellular
-    INTERFACE
-        source/CellularNonIPSocket.cpp
-)
+add_library(mbed-netsocket-api STATIC EXCLUDE_FROM_ALL)
 
-target_include_directories(mbed-netsocket
-    INTERFACE
+target_include_directories(mbed-netsocket-api
+    PUBLIC
         .
         ./include
         ./include/netsocket
 )
 
-target_sources(mbed-netsocket
-    INTERFACE
+target_sources(mbed-netsocket-api
+    PRIVATE
         source/DTLSSocket.cpp
         source/DTLSSocketWrapper.cpp
         source/EMACInterface.cpp
@@ -48,16 +44,24 @@ target_sources(mbed-netsocket
         source/nsapi_ppp.cpp
 )
 
-target_compile_definitions(mbed-netsocket
-    INTERFACE
+target_compile_definitions(mbed-netsocket-api
+    PUBLIC
         MBED_CONF_NSAPI_PRESENT=1
 )
+
+target_link_libraries(mbed-netsocket-api
+    PUBLIC
+        mbed-core-flags
+        mbed-mbedtls
+        mbed-events
+)
+
+add_library(mbed-netsocket INTERFACE)
 
 target_link_libraries(mbed-netsocket
     INTERFACE
         mbed-mbedtls
         mbed-lwipstack
-        mbed-events
 )
 
 if("DEVICE_EMAC=1" IN_LIST MBED_TARGET_DEFINITIONS)

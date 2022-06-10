@@ -7,6 +7,8 @@ if(MBED_OS_ENABLE_TESTS)
     endif()
 endif()
 
+add_library(mbed-mbedtls STATIC EXCLUDE_FROM_ALL)
+
 target_include_directories(mbed-mbedtls
     PUBLIC
         .
@@ -110,6 +112,8 @@ target_compile_definitions(mbed-mbedtls
     PUBLIC
         MBED_CONF_MBEDTLS_PRESENT=1
 )
+
+target_link_libraries(mbed-mbedtls PUBLIC mbed-core-flags)
 
 # Workaround for https://github.com/ARMmbed/mbedtls/issues/1077
 # which affects cores without __thumb2__ set by the compiler
