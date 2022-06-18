@@ -1,5 +1,5 @@
-/* mbed Microcontroller Library
- * Copyright (c) 2006-2019 ARM Limited
+/*
+ * Copyright (c) 2022, Arm Limited and affiliates.
  * SPDX-License-Identifier: Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,9 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef MBED_RTOS_STORAGE_H
-#define MBED_RTOS_STORAGE_H
 
-#include "mbed_rtx_storage.h"
+#ifndef _MBED_RTOS_TYPES_H
+#define _MBED_RTOS_TYPES_H
 
-#endif
+#include "cmsis_os2.h"
+
+#endif //_MBED_RTOS_TYPES_H
