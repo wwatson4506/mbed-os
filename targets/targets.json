@@ -1900,7 +1900,7 @@
             "HSE_VALUE=26000000"
         ],
         "overrides": {
-            "clock_source": "USE_PLL_HSI"
+            "clock_source": "USE_PLL_HSE_XTAL"
         },
         "components_remove": [
             "FLASHIAP"
@@ -1912,6 +1912,22 @@
         "device_name": "STM32F411RETx",
         "detect_code": [
             "0320"
+        ]
+    },
+    "MCU_STM32F412xE": {
+        "inherits": [
+            "MCU_STM32F4"
+        ],
+        "public": false,
+        "extra_labels_add": [
+            "STM32F412xE"
+        ],
+        "macros_add": [
+            "STM32F412Zx"
+        ],
+        "device_has_add": [
+            "CAN",
+            "TRNG"
         ]
     },
     "MCU_STM32F412xG": {
@@ -9065,7 +9081,8 @@
             "FLASH",
             "SPI",
             "I2C",
-            "SLEEP"
+            "SLEEP",
+            "ITM"
         ],
         "components": [
             "FLASHIAP"
