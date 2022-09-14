@@ -1,0 +1,116 @@
+var group___m_x___w_i_f_i =
+[
+    [ "Driver_I/O", "group___m_x___w_i_f_i___i_o.html", "group___m_x___w_i_f_i___i_o" ],
+    [ "Driver_init", "group___m_x___w_i_f_i___i_n_i_t.html", "group___m_x___w_i_f_i___i_n_i_t" ],
+    [ "Network bypass mode", "group___m_x___w_i_f_i___n_e_t_w_o_r_k___b_y_p_a_s_s___m_o_d_e.html", "group___m_x___w_i_f_i___n_e_t_w_o_r_k___b_y_p_a_s_s___m_o_d_e" ],
+    [ "Station", "group___m_x___w_i_f_i___b_a_s_i_c.html", "group___m_x___w_i_f_i___b_a_s_i_c" ],
+    [ "SoftAP", "group___m_x___w_i_f_i___s_o_f_t_a_p.html", "group___m_x___w_i_f_i___s_o_f_t_a_p" ],
+    [ "Socket", "group___w_i_f_i___s_o_c_k_e_t.html", "group___w_i_f_i___s_o_c_k_e_t" ],
+    [ "mDNS", "group___m_x___w_i_f_i___m_d_n_s.html", "group___m_x___w_i_f_i___m_d_n_s" ],
+    [ "TLS", "group___m_x___w_i_f_i___t_l_s.html", "group___m_x___w_i_f_i___t_l_s" ],
+    [ "Webserver", "group___m_x___w_i_f_i___w_e_b_s_e_r_v_e_r.html", "group___m_x___w_i_f_i___w_e_b_s_e_r_v_e_r" ],
+    [ "FOTA", "group___m_x___w_i_f_i___f_o_t_a.html", "group___m_x___w_i_f_i___f_o_t_a" ],
+    [ "MX_WIFI_STATION_POWERSAVE", "group___m_x___w_i_f_i___s_t_a_t_i_o_n___p_o_w_e_r_s_a_v_e.html", null ],
+    [ "mwifi_ip_attr_t", "structmwifi__ip__attr__t.html", [
+      [ "dnserver", "structmwifi__ip__attr__t.html#a577f61c084078bd6d3a651e62a5d1497", null ],
+      [ "gateway", "structmwifi__ip__attr__t.html#aa3bc6a4fc697de45b4770af44d3e2635", null ],
+      [ "localip", "structmwifi__ip__attr__t.html#a34291b2ae082c88341e09853cb44d54d", null ],
+      [ "netmask", "structmwifi__ip__attr__t.html#a7dbd74c4950f27d7d42f54c48647e784", null ]
+    ] ],
+    [ "mwifi_eap_attr_t", "structmwifi__eap__attr__t.html", null ],
+    [ "MX_WIFI_IO_t", "struct_m_x___w_i_f_i___i_o__t.html", [
+      [ "IO_DeInit", "struct_m_x___w_i_f_i___i_o__t.html#ad7ebbd9bcbd13b6a9d014ed49e0048fe", null ],
+      [ "IO_Delay", "struct_m_x___w_i_f_i___i_o__t.html#ad8976915e18dd95c785bb6fbeda0fc65", null ],
+      [ "IO_Init", "struct_m_x___w_i_f_i___i_o__t.html#abd291ddc3439a28b8c162b2ae38d4506", null ],
+      [ "IO_Receive", "struct_m_x___w_i_f_i___i_o__t.html#ad64b39bf34ce8a58b5f19ff3944063fe", null ],
+      [ "IO_Send", "struct_m_x___w_i_f_i___i_o__t.html#a44595d4d302a17a25c08702c1aa9789e", null ]
+    ] ],
+    [ "MX_WIFI_SystemInfo_t", "struct_m_x___w_i_f_i___system_info__t.html", [
+      [ "FW_Rev", "struct_m_x___w_i_f_i___system_info__t.html#a36b20e74b0e219b733f81221ec59220c", null ],
+      [ "MAC", "struct_m_x___w_i_f_i___system_info__t.html#a74cfce02638c12cf611e7c5451513a9e", null ],
+      [ "Product_ID", "struct_m_x___w_i_f_i___system_info__t.html#a1b50892f8c213fee8b973ba4bdb9edda", null ],
+      [ "Product_Name", "struct_m_x___w_i_f_i___system_info__t.html#ae7b1d03be7e0037bbbad7278c68aea41", null ]
+    ] ],
+    [ "MX_WIFI_Network_t", "struct_m_x___w_i_f_i___network__t.html", [
+      [ "DHCP_IsEnabled", "struct_m_x___w_i_f_i___network__t.html#ab0b0e4dbeeece2adc2c000d3338706ac", null ],
+      [ "DNS1", "struct_m_x___w_i_f_i___network__t.html#aa34d14535c65edab80d951287d9e952e", null ],
+      [ "Gateway6_Addr", "struct_m_x___w_i_f_i___network__t.html#af497fbb2baa4a6aa36eda149caf01186", null ],
+      [ "Gateway_Addr", "struct_m_x___w_i_f_i___network__t.html#a1b7bf73f168754de08128413d0fdef82", null ],
+      [ "IP6_Addr", "struct_m_x___w_i_f_i___network__t.html#a5a9bd3d63bdbb14a444fe25870c6ffa5", null ],
+      [ "IP6_DNS1", "struct_m_x___w_i_f_i___network__t.html#a627e971a9c76c90c63ef78c94ad9953d", null ],
+      [ "IP6_Mask", "struct_m_x___w_i_f_i___network__t.html#ac1efefc2996dcb4fc2c116d963be4de6", null ],
+      [ "IP6_state", "struct_m_x___w_i_f_i___network__t.html#a516b7cd6cd168c96cc292e9cf302d1be", null ],
+      [ "IP_Addr", "struct_m_x___w_i_f_i___network__t.html#ab64595794e086cdae75c484159bfd688", null ],
+      [ "IP_Mask", "struct_m_x___w_i_f_i___network__t.html#aac782a3b690895cc8325e9b67ca26612", null ],
+      [ "IsConnected", "struct_m_x___w_i_f_i___network__t.html#af7a24f940e632e156bdc4ee9656b63f9", null ],
+      [ "pswd", "struct_m_x___w_i_f_i___network__t.html#a3bfcd79197f947c28f575583d27c2f11", null ],
+      [ "Security", "struct_m_x___w_i_f_i___network__t.html#a69218c83cdb1b5f70e85552f58800218", null ],
+      [ "SSID", "struct_m_x___w_i_f_i___network__t.html#a232ffb9952d3fd64c8fb3e18fe88d691", null ]
+    ] ],
+    [ "MX_WIFI_APSettings_t", "struct_m_x___w_i_f_i___a_p_settings__t.html", [
+      [ "channel", "struct_m_x___w_i_f_i___a_p_settings__t.html#a715f5cb061d11eb75981741eda4dafcd", null ],
+      [ "ip", "struct_m_x___w_i_f_i___a_p_settings__t.html#a6a1c219e2843f0de2d167437f4f62bbd", null ],
+      [ "pswd", "struct_m_x___w_i_f_i___a_p_settings__t.html#abb9474e2375b643eee84841a0cf8ac3f", null ],
+      [ "SSID", "struct_m_x___w_i_f_i___a_p_settings__t.html#a44be5769503ff0172238c1574f3e124d", null ]
+    ] ],
+    [ "MX_WIFI_Runtime_t", "struct_m_x___w_i_f_i___runtime__t.html", [
+      [ "callback_arg", "struct_m_x___w_i_f_i___runtime__t.html#a2c6138fbb8170b8ecff8e9d55277a97a", null ],
+      [ "fota_status_cb", "struct_m_x___w_i_f_i___runtime__t.html#ae5993dccb3bf0a9bd6e9dddc9843c4c9", null ],
+      [ "fota_user_args", "struct_m_x___w_i_f_i___runtime__t.html#aaea10af164aaaca7de53c5abb3b2f1ba", null ],
+      [ "interfaces", "struct_m_x___w_i_f_i___runtime__t.html#a42e304aa954e18c22f9a13419e70cb23", null ],
+      [ "netlink_input_cb", "struct_m_x___w_i_f_i___runtime__t.html#aff0204f5d125dc203ff30f1755f1dd1a", null ],
+      [ "netlink_user_args", "struct_m_x___w_i_f_i___runtime__t.html#a6c664455a96a5283ee4cdddb5981c82d", null ],
+      [ "scan_number", "struct_m_x___w_i_f_i___runtime__t.html#a913057a3900c87ab6ac099bc956698a8", null ],
+      [ "scan_result", "struct_m_x___w_i_f_i___runtime__t.html#a442a010edfa57b5aeb235fe8e8c3c604", null ],
+      [ "status_cb", "struct_m_x___w_i_f_i___runtime__t.html#adffe8218efc4a5babc409ef623089217", null ],
+      [ "Timeout", "struct_m_x___w_i_f_i___runtime__t.html#ac32e3b19d6fb5d4056cebee773e128ed", null ]
+    ] ],
+    [ "MX_WIFIObject_t", "struct_m_x___w_i_f_i_object__t.html", [
+      [ "APSettings", "struct_m_x___w_i_f_i_object__t.html#a3e32fdadfdec8cc2f91de606c2117f69", null ],
+      [ "fops", "struct_m_x___w_i_f_i_object__t.html#a54b8156efb967550e8b37d07ba1544d9", null ],
+      [ "NetSettings", "struct_m_x___w_i_f_i_object__t.html#a9adc0ea5e69f9a35d58ff364e5d3382b", null ],
+      [ "Runtime", "struct_m_x___w_i_f_i_object__t.html#a87a1102e980bd54418bb5e30f946b16b", null ],
+      [ "SysInfo", "struct_m_x___w_i_f_i_object__t.html#ae48e9192c5c338f48bc3abdbb8af7cbe", null ]
+    ] ],
+    [ "MIN", "group___m_x___w_i_f_i.html#ga3acffbd305ee72dcd4593c0d8af64a4f", null ],
+    [ "MX_WIFI_MAC_SIZE", "group___m_x___w_i_f_i.html#ga646637675c4b5c0e8eab156ca1637fea", null ],
+    [ "MX_WIFI_SCAN_BUF_SIZE", "group___m_x___w_i_f_i.html#ga53b518d861e2bff7b9526262ea8b7612", null ],
+    [ "MX_WIFI_STATUS_ERROR", "group___m_x___w_i_f_i.html#ga28f1ddf2c386e7ea165d569eeec7194a", null ],
+    [ "MX_WIFI_STATUS_IO_ERROR", "group___m_x___w_i_f_i.html#ga051ccdd17582825295fe4b5930c6c2f6", null ],
+    [ "MX_WIFI_STATUS_OK", "group___m_x___w_i_f_i.html#ga7d5c3f44ff3111f2278b829a0e39bfb2", null ],
+    [ "MX_WIFI_STATUS_PARAM_ERROR", "group___m_x___w_i_f_i.html#ga2c0a9146de23775d813cdf66056df1e4", null ],
+    [ "MX_WIFI_STATUS_T", "group___m_x___w_i_f_i.html#ga2018d9b087b64f09ea7b1078a79aa378", null ],
+    [ "MX_WIFI_STATUS_TIMEOUT", "group___m_x___w_i_f_i.html#gac87514efc490c9d1c75e2b1ec72d75f5", null ],
+    [ "IO_DeInit_Func", "group___m_x___w_i_f_i.html#gab70382d3b9f59f5bbf244c318a87f634", null ],
+    [ "IO_Delay_Func", "group___m_x___w_i_f_i.html#ga1880df910ffe309664b23b9768852d0e", null ],
+    [ "IO_Init_Func", "group___m_x___w_i_f_i.html#ga3114b040057ced9835d91ff4c161b9d6", null ],
+    [ "IO_Receive_Func", "group___m_x___w_i_f_i.html#gac198504f1afd3d932948957eb1db5854", null ],
+    [ "IO_Send_Func", "group___m_x___w_i_f_i.html#gaaf78b9b017c36e194eea7e9236d4d686", null ],
+    [ "mc_wifi_scan_mode_t", "group___m_x___w_i_f_i.html#gac5a7368c04288169364ba0c04b1eefc1", null ],
+    [ "mwifi_if_t", "group___m_x___w_i_f_i.html#ga094fe48667a442c70b7810956bc21d07", null ],
+    [ "mx_wifi_fota_status_cb_t", "group___m_x___w_i_f_i.html#gabf3194430a356a6f15548ff8c117eb80", null ],
+    [ "mx_wifi_netlink_input_cb_t", "group___m_x___w_i_f_i.html#ga28da9c27e2a8d8f59451b682960dd03f", null ],
+    [ "mx_wifi_status_callback_t", "group___m_x___w_i_f_i.html#gabf4780bedca1be4bfd61613bca7d3442", [
+      [ "MC_SOFTAP", "group___m_x___w_i_f_i.html#ggac34c4c978f4130a92a5068f9e21ea9fca8b671cb1ecf9c1a1c8a3e039234b26ec", null ],
+      [ "MC_STATION", "group___m_x___w_i_f_i.html#ggac34c4c978f4130a92a5068f9e21ea9fca3f2d3f7995c4be57e4851d543a8acb30", null ],
+      [ "MC_SCAN_PASSIVE", "group___m_x___w_i_f_i.html#gga10e74d65d7876276a8f6061c71dcf469a55ca8e0da826c5230c2bbf6f93380ef8", null ],
+      [ "MC_SCAN_ACTIVE", "group___m_x___w_i_f_i.html#gga10e74d65d7876276a8f6061c71dcf469a53e17457e2936ed085f4e600383113c4", null ],
+      [ "MWIFI_EVENT_STA_DOWN", "group___m_x___w_i_f_i.html#gga0ae1e3bf78c960c83e2d437efd802058a27d6ad0edfec30de9c71276355bad7bf", null ],
+      [ "MWIFI_EVENT_STA_UP", "group___m_x___w_i_f_i.html#gga0ae1e3bf78c960c83e2d437efd802058a9f01c1a18c6b7b2612e920981e4eeb7a", null ],
+      [ "MWIFI_EVENT_STA_GOT_IP", "group___m_x___w_i_f_i.html#gga0ae1e3bf78c960c83e2d437efd802058a0fd66f95928e4f9644b604596d7b112b", null ],
+      [ "MWIFI_EVENT_AP_DOWN", "group___m_x___w_i_f_i.html#gga0ae1e3bf78c960c83e2d437efd802058adcf422a9aebea96362cda890183412fd", null ],
+      [ "MWIFI_EVENT_AP_UP", "group___m_x___w_i_f_i.html#gga0ae1e3bf78c960c83e2d437efd802058aee33357ba3767f9232718c260559106d", null ]
+    ] ],
+    [ "EapType", "group___m_x___w_i_f_i.html#ga6722dbef5daa37e1da1b980b7783a8ef", null ],
+    [ "mx_wifi_fota_status_e", "group___m_x___w_i_f_i.html#ga0df9f4d08e0cf6c09249bb5b80e23e55", null ],
+    [ "MX_WIFI_SecurityType_t", "group___m_x___w_i_f_i.html#gac4664f6280269c3c402c42a4a030028a", [
+      [ "MX_WIFI_SEC_NONE", "group___m_x___w_i_f_i.html#ggac4664f6280269c3c402c42a4a030028aaf977e9abd2b2e97e2dbfa314b49d8fb4", null ],
+      [ "MX_WIFI_SEC_WEP", "group___m_x___w_i_f_i.html#ggac4664f6280269c3c402c42a4a030028aa749015d93c1c7ead8ea67911234101ce", null ],
+      [ "MX_WIFI_SEC_WPA_TKIP", "group___m_x___w_i_f_i.html#ggac4664f6280269c3c402c42a4a030028aa961e0d1f7cee8b0c2621797e58939c29", null ],
+      [ "MX_WIFI_SEC_WPA_AES", "group___m_x___w_i_f_i.html#ggac4664f6280269c3c402c42a4a030028aa2a6aff749ed2310ba126e5db98427b22", null ],
+      [ "MX_WIFI_SEC_WPA2_TKIP", "group___m_x___w_i_f_i.html#ggac4664f6280269c3c402c42a4a030028aaa050e4051121dc97295e3b97fea1a765", null ],
+      [ "MX_WIFI_SEC_WPA2_AES", "group___m_x___w_i_f_i.html#ggac4664f6280269c3c402c42a4a030028aa0ccefb5f66492f0f840ba402723375ba", null ],
+      [ "MX_WIFI_SEC_WPA2_MIXED", "group___m_x___w_i_f_i.html#ggac4664f6280269c3c402c42a4a030028aab6f17cb4ae87d8c842c5347cc519851e", null ],
+      [ "MX_WIFI_SEC_AUTO", "group___m_x___w_i_f_i.html#ggac4664f6280269c3c402c42a4a030028aacf325bd5a88b9214741b93e38f067021", null ]
+    ] ]
+];

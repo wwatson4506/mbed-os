@@ -1,0 +1,26 @@
+var class_s_d_block_device =
+[
+    [ "SDBlockDevice", "class_s_d_block_device.html#ae486bcce5fc2cf30739812a3d54f9d25", null ],
+    [ "SDBlockDevice", "class_s_d_block_device.html#ad5dfaad824f5b0b07b2dec4c22668716", null ],
+    [ "SDBlockDevice", "class_s_d_block_device.html#aa568c7f982e8d2b57337aa3f112fa667", null ],
+    [ "SDBlockDevice", "class_s_d_block_device.html#aa03a1a8b4715caf1028f9bc30b431992", null ],
+    [ "debug", "class_s_d_block_device.html#a343195e77a8c3244e526c0227e9404ff", null ],
+    [ "deinit", "class_s_d_block_device.html#a9d82ba22bb381150961a175d10072ad4", null ],
+    [ "erase", "class_s_d_block_device.html#a4512b8f5fe68f9dff00d9db27679164b", null ],
+    [ "frequency", "class_s_d_block_device.html#ac2dbec1f23d89fc8e52e693f8f273271", null ],
+    [ "get_erase_size", "class_s_d_block_device.html#a8f61d46d7e7e617363dc61a6990a0ffe", null ],
+    [ "get_erase_size", "class_s_d_block_device.html#afd39215fb18d34c6242ca8f002539028", null ],
+    [ "get_erase_value", "class_s_d_block_device.html#af1db43191a234b156c8a067f8ead9eca", null ],
+    [ "get_program_size", "class_s_d_block_device.html#a4df0d70ecb62e6edb1903e1bc983b03a", null ],
+    [ "get_read_size", "class_s_d_block_device.html#a0c996e6b266067dbea0a755ba7f9a1c5", null ],
+    [ "get_type", "class_s_d_block_device.html#a044d6f3d90a260727a7de63c42c6c345", null ],
+    [ "init", "class_s_d_block_device.html#ae3e772fe7bcf262931cb3620b2af59f7", null ],
+    [ "is_valid_erase", "class_s_d_block_device.html#a9d288d42f589f9b2463a6a14e33dad57", null ],
+    [ "is_valid_program", "class_s_d_block_device.html#ad9dfb6baac1a9a42b4532041ffdd854d", null ],
+    [ "is_valid_read", "class_s_d_block_device.html#a6dfbd72124163059085bab6f28bd39e4", null ],
+    [ "program", "class_s_d_block_device.html#a1745a6adadbdc69074d4e7cdfc28330c", null ],
+    [ "read", "class_s_d_block_device.html#a1537d13013fe5ced2d9d71ca3e47eddf", null ],
+    [ "size", "class_s_d_block_device.html#a61522974c93e870b2a99db0e690c0cac", null ],
+    [ "sync", "class_s_d_block_device.html#a810a727ce5554d3178e17b6bc55025dd", null ],
+    [ "trim", "class_s_d_block_device.html#acdc2e11964bcd5ee241ff3879c74868a", null ]
+];

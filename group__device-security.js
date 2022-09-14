@@ -1,0 +1,9 @@
+var group__device_security =
+[
+    [ "DeviceKey class", "group__device-security___device_key.html", null ],
+    [ "DeviceKey", "classmbed_1_1_device_key.html", [
+      [ "device_inject_root_of_trust", "classmbed_1_1_device_key.html#ad78ff4af9e598169727719960f61a34b", null ],
+      [ "generate_derived_key", "classmbed_1_1_device_key.html#a8e67de6eeadc08f249a820384583eb53", null ],
+      [ "generate_root_of_trust", "classmbed_1_1_device_key.html#a4601ff2254745458e751b19132c72d36", null ]
+    ] ]
+];
