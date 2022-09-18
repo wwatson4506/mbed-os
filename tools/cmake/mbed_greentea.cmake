@@ -139,13 +139,6 @@ function(mbed_greentea_add_test)
     endif()
 
 
-    list(APPEND CONFIG_DEFS_COPY ${MBED_CONFIG_DEFINITIONS})
-    list(FILTER CONFIG_DEFS_COPY INCLUDE REGEX "MBED_CONF_PLATFORM_STDIO_BAUD_RATE")
-    if(NOT ${CONFIG_DEFS_COPY} STREQUAL "")
-        string(REGEX MATCH "[0-9]*$" BAUD_RATE ${CONFIG_DEFS_COPY})
-        list(APPEND MBED_HTRUN_ARGUMENTS "--baud-rate=${BAUD_RATE}")
-    endif()
-
     # Configure the CMake script which runs the test.
     # We have to use a helper script in order to run both the flashing and htrun in one test
     configure_file(
