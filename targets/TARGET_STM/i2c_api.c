@@ -155,7 +155,7 @@ static uint32_t      I2c_valid_timing_nbr = 0;
 #endif // MBED_CONF_TARGET_I2C_TIMING_VALUE_ALGO
 
 #ifndef DEBUG_STDIO
-#   define DEBUG_STDIO 0
+#   define DEBUG_STDIO 1
 #endif
 
 #if DEBUG_STDIO
@@ -538,7 +538,8 @@ void i2c_init_internal(i2c_t *obj, const i2c_pinmap_t *pinmap)
     obj_s->event = 0;
     obj_s->XferOperation = I2C_FIRST_AND_LAST_FRAME;
 #ifdef I2C_IP_VERSION_V2
-    obj_s->pending_start = 0;
+    obj_s->pending_start = false;
+	obj_s->already_stopped = false;
 #endif
 }
 
@@ -890,8 +891,9 @@ int i2c_byte_write(i2c_t *obj, int data)
 int i2c_start(i2c_t *obj)
 {
     struct i2c_s *obj_s = I2C_S(obj);
-    /*  This I2C IP doesn't  */
+    /*  We will do the actual start operation later. */
     obj_s->pending_start = 1;
+	obj_s->already_stopped = false;
     return 0;
 }
 
@@ -908,25 +910,19 @@ int i2c_stop(i2c_t *obj)
     }
 #endif
 
-    // Ensure the transmission is started before sending a stop
-    if ((handle->Instance->CR2 & (uint32_t)I2C_CR2_RD_WRN) == 0) {
-        timeout = FLAG_TIMEOUT;
-        while (!__HAL_I2C_GET_FLAG(handle, I2C_FLAG_TXIS)) {
-            if ((timeout--) == 0) {
-                return I2C_ERROR_BUS_BUSY;
-            }
-        }
-    }
+	if(!obj_s->already_stopped)
+	{
+		// Generate the STOP condition
+		handle->Instance->CR2 = I2C_CR2_STOP;
 
-    // Generate the STOP condition
-    handle->Instance->CR2 = I2C_CR2_STOP;
-
-    timeout = FLAG_TIMEOUT;
-    while (!__HAL_I2C_GET_FLAG(handle, I2C_FLAG_STOPF)) {
-        if ((timeout--) == 0) {
-            return I2C_ERROR_BUS_BUSY;
-        }
-    }
+		timeout = FLAG_TIMEOUT;
+		while (!__HAL_I2C_GET_FLAG(handle, I2C_FLAG_STOPF)) {
+			if ((timeout--) == 0) {
+				DEBUG_PRINTF("timeout in i2c_stop waiting for I2C_FLAG_STOPF\r\n");
+				return I2C_ERROR_BUS_BUSY;
+			}
+		}
+	}
 
     /* Clear STOP Flag */
     __HAL_I2C_CLEAR_FLAG(handle, I2C_FLAG_STOPF);
@@ -1002,7 +998,7 @@ int i2c_byte_write(i2c_t *obj, int data)
 {
     struct i2c_s *obj_s = I2C_S(obj);
     I2C_HandleTypeDef *handle = &(obj_s->handle);
-    int timeout = FLAG_TIMEOUT;
+    int timeout;
     uint32_t tmpreg = handle->Instance->CR2;
 #if DEVICE_I2CSLAVE
     if (obj_s->slave) {
@@ -1010,7 +1006,13 @@ int i2c_byte_write(i2c_t *obj, int data)
     }
 #endif
     if (obj_s->pending_start) {
+
+		// We get here if this is the first byte after the user called i2c_start()
         obj_s->pending_start = 0;
+
+		// Clear Acknowledge failure flag
+    	__HAL_I2C_CLEAR_FLAG(handle, I2C_FLAG_AF);
+
         //*  First byte after the start is the address */
         tmpreg |= (uint32_t)((uint32_t)data & I2C_CR2_SADD);
         if (data & 0x01) {
@@ -1023,40 +1025,62 @@ int i2c_byte_write(i2c_t *obj, int data)
         tmpreg &= ~I2C_CR2_RELOAD;
         /*  Disable Autoend */
         tmpreg &= ~I2C_CR2_AUTOEND;
-        /* Do not set any transfer size for now */
-        tmpreg |= (I2C_CR2_NBYTES & (1 << 16));
+        /*  Set transfer size to 1 */
+        tmpreg |= (I2C_CR2_NBYTES & (1 << I2C_CR2_NBYTES_Pos));
         /* Set the prepared configuration */
         handle->Instance->CR2 = tmpreg;
+
+		// Wait until we get the result for the address byte.
+		// The hardware clears the I2C_CR2_START bit when the start condition has been sent.
+		timeout = BYTE_TIMEOUT;
+		while (handle->Instance->CR2 & I2C_CR2_START) {
+			if ((timeout--) == 0) {
+				return 2;
+			}
+		}
     } else {
         /* Set the prepared configuration */
         tmpreg = handle->Instance->CR2;
 
-        /* Then send data when there's room in the TX fifo */
-        if ((tmpreg & I2C_CR2_RELOAD) != 0) {
-            while (!__HAL_I2C_GET_FLAG(handle, I2C_FLAG_TCR)) {
-                if ((timeout--) == 0) {
-                    DEBUG_PRINTF("timeout in i2c_byte_write\r\n");
-                    return 2;
-                }
-            }
-        }
-        /*  Enable reload mode as we don't know how many bytes will eb sent */
+        /*  Enable reload mode as we don't know how many bytes will br sent */
         tmpreg |= I2C_CR2_RELOAD;
         /*  Set transfer size to 1 */
-        tmpreg |= (I2C_CR2_NBYTES & (1 << 16));
+        tmpreg |= (I2C_CR2_NBYTES & (1 << I2C_CR2_NBYTES_Pos));
         /* Set the prepared configuration */
         handle->Instance->CR2 = tmpreg;
-        /*  Prepare next write */
+        /*  Make sure we have room in the output register (TXDR) */
         timeout = FLAG_TIMEOUT;
         while (!__HAL_I2C_GET_FLAG(handle, I2C_FLAG_TXE)) {
             if ((timeout--) == 0) {
+				DEBUG_PRINTF("timeout in i2c_byte_write waiting for I2C_FLAG_TXE\r\n");
                 return 2;
             }
         }
         /*  Write byte */
         handle->Instance->TXDR = data;
+
+		// Wait until we get the result for that byte
+		// Since we set NBYTES to 1 and RELOAD to 1, the Transfer Complete Reload flag will set when this byte has transferred.
+		// Since we set AUTOEND to 0, the MCU will pause the SCL clock from then until we write another byte.
+		timeout = BYTE_TIMEOUT;
+		while (!(__HAL_I2C_GET_FLAG(handle, I2C_FLAG_TCR) || __HAL_I2C_GET_FLAG(handle, I2C_FLAG_AF))) {
+			if ((timeout--) == 0) {
+				DEBUG_PRINTF("timeout in i2c_byte_write waiting for byte complete\r\n");
+				return 2;
+			}
+		}
     }
 
+	// If I2C_FLAG_AF is set, we got a NACK, and the hardware has already generated a stop.
+	// Otherwise, we got an ACK.
+	if(__HAL_I2C_GET_FLAG(handle, I2C_FLAG_AF))
+	{
+		__HAL_I2C_CLEAR_FLAG(handle, I2C_FLAG_AF);
+		obj_s->already_stopped = true;
+		return 0; // NACK
+	}
+
+	// Successful!
     return 1;
 }
 #endif //I2C_IP_VERSION_V2
@@ -1265,6 +1289,14 @@ void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c)
         /* Keep Set event flag */
         event_code = (I2C_EVENT_TRANSFER_EARLY_NACK) | (I2C_EVENT_ERROR_NO_SLAVE);
     }
+
+	// If we only got a NACK, no reason to call the cavalry
+	if(handle->ErrorCode == HAL_I2C_ERROR_AF)
+	{
+		obj_s->event = event_code;
+		return;
+	}
+
     DEBUG_PRINTF("HAL_I2C_ErrorCallback:%d, index=%d\r\n", (int) hi2c->ErrorCode, obj_s->index);
 
     /* re-init IP to try and get back in a working state */

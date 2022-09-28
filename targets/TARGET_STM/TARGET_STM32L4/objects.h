@@ -31,6 +31,8 @@
 #include "stm32l4xx_ll_pwr.h"
 #include "stm32l4xx_ll_rcc.h"
 
+#include "stdbool.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -105,7 +107,9 @@ struct i2c_s {
     IRQn_Type error_i2cIRQ;
     uint32_t XferOperation;
     volatile uint8_t event;
-    volatile int pending_start;
+	// TODO convert below to state enum for ip v2
+    volatile bool pending_start;
+	volatile bool already_stopped; // true if we are in single-byte mode and the I2C transaction was already stopped due to a NACK
     int current_hz;
 #if DEVICE_I2CSLAVE
     uint8_t slave;
