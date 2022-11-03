@@ -80,22 +80,34 @@ using namespace std::chrono;
 #if defined (__ICCARM__)   /*!< IAR Compiler */
 #pragma data_alignment=4
 #endif
-__ALIGN_BEGIN ETH_DMADescTypeDef DMARxDscrTab[ETH_RXBUFNB] __ALIGN_END; /* Ethernet Rx DMA Descriptor */
+// __ALIGN_BEGIN ETH_DMADescTypeDef DMARxDscrTab[ETH_RXBUFNB] __ALIGN_END; /* Ethernet Rx DMA Descriptor */
+// ETH_DMADescTypeDef DMARxDscrTab[ETH_RXBUFNB] __attribute__((section(".RxDecripSection")));/* Ethernet Rx DMA Descriptor */
+// ALIGN_32BYTES( ETH_DMADescTypeDef DMARxDscrTab[ETH_RXBUFNB] ); /* Ethernet Rx DMA Descriptor */
+ALIGN_32BYTES( ETH_DMADescTypeDef DMARxDscrTab[ETH_RXBUFNB] __attribute__((section(".emac_section"))));/* Ethernet Rx DMA Descriptor */
 
 #if defined (__ICCARM__)   /*!< IAR Compiler */
 #pragma data_alignment=4
 #endif
-__ALIGN_BEGIN ETH_DMADescTypeDef DMATxDscrTab[ETH_TXBUFNB] __ALIGN_END; /* Ethernet Tx DMA Descriptor */
+// __ALIGN_BEGIN ETH_DMADescTypeDef DMATxDscrTab[ETH_TXBUFNB] __ALIGN_END; /* Ethernet Tx DMA Descriptor */
+// ETH_DMADescTypeDef DMATxDscrTab[ETH_TXBUFNB] __attribute__((section(".TxDescripSection")));/* Ethernet Tx DMA Descriptor */
+// ALIGN_32BYTES( ETH_DMADescTypeDef DMATxDscrTab[ETH_TXBUFNB] ); /* Ethernet Tx DMA Descriptor */
+ALIGN_32BYTES( ETH_DMADescTypeDef DMATxDscrTab[ETH_TXBUFNB] __attribute__((section(".emac_section"))));/* Ethernet Tx DMA Descriptor */
 
 #if defined (__ICCARM__)   /*!< IAR Compiler */
 #pragma data_alignment=4
 #endif
-__ALIGN_BEGIN uint8_t Rx_Buff[ETH_RXBUFNB][ETH_RX_BUF_SIZE] __ALIGN_END; /* Ethernet Receive Buffer */
+// __ALIGN_BEGIN uint8_t Rx_Buff[ETH_RXBUFNB][ETH_RX_BUF_SIZE] __ALIGN_END; /* Ethernet Receive Buffer */
+// uint8_t Rx_Buff[ETH_RXBUFNB][ETH_RX_BUF_SIZE] __attribute__((section(".RxarraySection"))); /* Ethernet Receive Buffer */
+// ALIGN_32BYTES( uint8_t Rx_Buff[ETH_RXBUFNB][ETH_RX_BUF_SIZE] ); /* Ethernet Receive Buffer */
+ALIGN_32BYTES( uint8_t Rx_Buff[ETH_RXBUFNB][ETH_RX_BUF_SIZE] __attribute__((section(".emac_section")))); /* Ethernet Receive Buffer */
 
 #if defined (__ICCARM__)   /*!< IAR Compiler */
 #pragma data_alignment=4
 #endif
-__ALIGN_BEGIN uint8_t Tx_Buff[ETH_TXBUFNB][ETH_TX_BUF_SIZE] __ALIGN_END; /* Ethernet Transmit Buffer */
+// __ALIGN_BEGIN uint8_t Tx_Buff[ETH_TXBUFNB][ETH_TX_BUF_SIZE] __ALIGN_END; /* Ethernet Transmit Buffer */
+// uint8_t Tx_Buff[ETH_TXBUFNB][ETH_TX_BUF_SIZE] __attribute__((section(".TxarraySection"))); /* Ethernet Transmit Buffer */
+// ALIGN_32BYTES( uint8_t Tx_Buff[ETH_TXBUFNB][ETH_TX_BUF_SIZE] ); /* Ethernet Transmit Buffer */
+ALIGN_32BYTES( uint8_t Tx_Buff[ETH_TXBUFNB][ETH_TX_BUF_SIZE] __attribute__((section(".emac_section")))); /* Ethernet Transmit Buffer */
 
 #else // ETH_IP_VERSION_V2
 
