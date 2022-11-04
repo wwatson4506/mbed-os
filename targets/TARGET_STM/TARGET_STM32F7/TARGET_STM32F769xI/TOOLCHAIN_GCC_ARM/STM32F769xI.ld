@@ -43,6 +43,7 @@ MEMORY
 { 
   FLASH (rx) : ORIGIN = MBED_APP_START, LENGTH = MBED_APP_SIZE
   RAM (rwx)  : ORIGIN = MBED_RAM0_START, LENGTH = MBED_RAM0_SIZE
+  SRAM2(xrw) : ORIGIN = 0x2007C000, LENGTH = 16k
 }
 
 /* Linker script to place sections and symbol values. Should be used together
@@ -185,11 +186,13 @@ SECTIONS
         . = ORIGIN(RAM) + LENGTH(RAM) - STACK_SIZE;
         __HeapLimit = .;
     } > RAM
+    
+    .emac_section  (NOLOAD) : { *(.DMA_EMAC_section) } >SRAM2
 
     /* .stack_dummy section doesn't contains any symbols. It is only
      * used for linker to calculate size of stack sections, and assign
      * values to stack symbols later */
-    .stack_dummy (COPY):
+    .stack_dummy (NOLOAD):
     {
         *(.stack*)
     } > RAM
