@@ -8,11 +8,6 @@
 #
 function(mbed_set_linker_script input_target raw_linker_script_path)
 
-    if(DEFINED MBED_CUSTOM_LINKER_SCRIPT) 
-        message("using custom linker script")
-        set(raw_linker_script_path  ${MBED_CUSTOM_LINKER_SCRIPT})
-    endif()
-
     # Make sure that we have an absolute path so that it can be used from a different directory
     get_filename_component(raw_linker_script_path ${raw_linker_script_path} ABSOLUTE)
 
@@ -35,6 +30,11 @@ function(mbed_setup_linker_script mbed_os_target mbed_baremetal_target target_de
     # Find the path to the desired linker script
     # (the property should be set on both the OS and baremetal targets in a sane world)
     get_property(RAW_LINKER_SCRIPT_PATHS TARGET ${mbed_baremetal_target} PROPERTY INTERFACE_MBED_LINKER_SCRIPT)
+
+    if(DEFINED MBED_CUSTOM_LINKER_SCRIPT) 
+        message("using custom linker script, replacing " ${RAW_LINKER_SCRIPT_PATHS} " by " ${MBED_CUSTOM_LINKER_SCRIPT})
+        set(RAW_LINKER_SCRIPT_PATHS  ${MBED_CUSTOM_LINKER_SCRIPT})
+    endif()
 
     # Check if two (or more) different linker scripts got used
     list(REMOVE_DUPLICATES RAW_LINKER_SCRIPT_PATHS)
