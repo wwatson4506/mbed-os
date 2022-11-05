@@ -32,7 +32,7 @@ function(mbed_setup_linker_script mbed_os_target mbed_baremetal_target target_de
     get_property(RAW_LINKER_SCRIPT_PATHS TARGET ${mbed_baremetal_target} PROPERTY INTERFACE_MBED_LINKER_SCRIPT)
 
     if(DEFINED MBED_CUSTOM_LINKER_SCRIPT) 
-        message("using custom linker script, replacing " ${RAW_LINKER_SCRIPT_PATHS} " by " ${MBED_CUSTOM_LINKER_SCRIPT})
+        message("-- using custom linker script " ${MBED_CUSTOM_LINKER_SCRIPT})
         set(RAW_LINKER_SCRIPT_PATHS  ${MBED_CUSTOM_LINKER_SCRIPT})
     endif()
 
