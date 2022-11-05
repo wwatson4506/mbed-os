@@ -8,6 +8,11 @@
 #
 function(mbed_set_linker_script input_target raw_linker_script_path)
 
+    if(DEFINED MBED_CUSTOM_LINKER_SCRIPT) 
+        message("using custom linker script")
+        set(raw_linker_script_path  ${MBED_CUSTOM_LINKER_SCRIPT})
+    endif()
+
     # Make sure that we have an absolute path so that it can be used from a different directory
     get_filename_component(raw_linker_script_path ${raw_linker_script_path} ABSOLUTE)
 
