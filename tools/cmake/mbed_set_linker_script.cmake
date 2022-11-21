@@ -95,6 +95,26 @@ function(mbed_setup_linker_script mbed_os_target mbed_baremetal_target target_de
 endfunction(mbed_setup_linker_script)
 
 #
+# Removes the specified compile flag from the specified target.
+#   _target     - The target to remove the compile flag from
+#   _flag       - The compile flag to remove
+#
+# Pre: apply_global_cxx_flags_to_all_targets() must be invoked.
+#
+# modified: remove last two entries, ignoring flag
+#
+macro(remove_flag_from_target _target _flag)
+    get_target_property(_target_cxx_flags ${_target} INTERFACE_LINK_OPTIONS)
+    if(_target_cxx_flags)
+    # list(REMOVE_ITEM _target_cxx_flags ${_flag})
+    list(REMOVE_AT _target_cxx_flags -1)
+    list(REMOVE_AT _target_cxx_flags -1)
+    set_target_properties(${_target} PROPERTIES INTERFACE_LINK_OPTIONS "${_target_cxx_flags}")
+    endif()
+endmacro()
+
+
+#
 # Change the linker script to a custom supplied script instead of the built in.
 #
 # target: CMake target for Mbed OS
@@ -138,6 +158,8 @@ function(mbed_set_custom_linker_script target new_linker_script_path)
         VERBATIM
     )
 
+    set(LINKER_SCRIPT_PATH ${CMAKE_BINARY_DIR}/${MBED_TARGET_CMAKE_NAME}.link_script.ld)
+
     # The job to create the linker script gets attached to the mbed-linker-script target,
     # which is then added as a dependency of the MCU target.  This ensures the linker script will exist
     # by the time we need it.
@@ -145,12 +167,19 @@ function(mbed_set_custom_linker_script target new_linker_script_path)
     foreach(TARGET mbed-baremetal mbed-os)
         add_dependencies(${TARGET} mbed-custom-linker-script)
 
+        remove_flag_from_target(${TARGET} "-T")
+        # remove_flag_from_target(${TARGET} "${LINKER_SCRIPT_PATH};")
+
         # Add linker flags to the MCU target to pick up the preprocessed linker script
         target_link_options(${TARGET}
             INTERFACE
                 "-T" "${CUSTOM_LINKER_SCRIPT_PATH}"
         )
     endforeach()
+
+    # print resulting link options
+    get_target_property(INTERFACE_LINK_OPTIONS mbed-os INTERFACE_LINK_OPTIONS)
+    message("INTERFACE_LINK_OPTIONS in mbed-os: " ${INTERFACE_LINK_OPTIONS})
 
 
 endfunction(mbed_set_custom_linker_script)
