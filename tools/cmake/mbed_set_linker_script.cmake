@@ -78,6 +78,7 @@ function(mbed_setup_linker_script mbed_os_target mbed_baremetal_target target_de
         VERBATIM
     )
 
+    
     # The job to create the linker script gets attached to the mbed-linker-script target,
     # which is then added as a dependency of the MCU target.  This ensures the linker script will exist
     # by the time we need it.
@@ -88,7 +89,7 @@ function(mbed_setup_linker_script mbed_os_target mbed_baremetal_target target_de
         # Add linker flags to the MCU target to pick up the preprocessed linker script
         target_link_options(${TARGET}
             INTERFACE
-                "-T" "${LINKER_SCRIPT_PATH}"
+                "-T${LINKER_SCRIPT_PATH} "
         )
     endforeach()
 
@@ -103,14 +104,13 @@ endfunction(mbed_setup_linker_script)
 #
 # modified: remove last two entries, ignoring flag
 #
-macro(remove_flag_from_target _target _flag)
+macro(remove_flag_from_target _target)
     get_target_property(_target_cxx_flags ${_target} INTERFACE_LINK_OPTIONS)
-    if(_target_cxx_flags)
+    # if(_target_cxx_flags)
     # list(REMOVE_ITEM _target_cxx_flags ${_flag})
     list(REMOVE_AT _target_cxx_flags -1)
-    list(REMOVE_AT _target_cxx_flags -1)
     set_target_properties(${_target} PROPERTIES INTERFACE_LINK_OPTIONS "${_target_cxx_flags}")
-    endif()
+    # endif()
 endmacro()
 
 
@@ -167,13 +167,13 @@ function(mbed_set_custom_linker_script target new_linker_script_path)
     foreach(TARGET mbed-baremetal mbed-os)
         add_dependencies(${TARGET} mbed-custom-linker-script)
 
-        remove_flag_from_target(${TARGET} "-T")
-        # remove_flag_from_target(${TARGET} "${LINKER_SCRIPT_PATH};")
+        remove_flag_from_target(${TARGET} )
+        # remove_flag_from_target(${TARGET} "-T ${LINKER_SCRIPT_PATH} ")
 
         # Add linker flags to the MCU target to pick up the preprocessed linker script
         target_link_options(${TARGET}
             INTERFACE
-                "-T" "${CUSTOM_LINKER_SCRIPT_PATH}"
+                "-T${CUSTOM_LINKER_SCRIPT_PATH}"
         )
     endforeach()
 
