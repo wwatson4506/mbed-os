@@ -93,3 +93,64 @@ function(mbed_setup_linker_script mbed_os_target mbed_baremetal_target target_de
     endforeach()
 
 endfunction(mbed_setup_linker_script)
+
+#
+# Change the linker script to a custom supplied script instead of the built in.
+#
+# target: CMake target for Mbed OS
+# mbed_baremetal_target: CMake target for Mbed Baremetal
+#
+function(mbed_set_custom_linker_script target new_linker_script_path)
+
+    set(RAW_LINKER_SCRIPT_PATHS  ${CMAKE_CURRENT_SOURCE_DIR}/${new_linker_script_path})
+    set(CUSTOM_LINKER_SCRIPT_PATH ${CMAKE_CURRENT_BINARY_DIR}/${target}.link_spript.ld)
+
+    message("*** mbed_set_custom_linker_script: "  ${RAW_LINKER_SCRIPT_PATHS} ": " ${CUSTOM_LINKER_SCRIPT_PATH})
+
+    # To avoid path limits on Windows, we create a "response file" and set the path to it as a
+    # global property. We need this solely to pass the compile definitions to GCC's preprocessor,
+    # so it can expand any macro definitions in the linker script.
+    get_property(linker_defs_response_file GLOBAL PROPERTY COMPILE_DEFS_RESPONSE_FILE)
+
+    get_filename_component(RAW_LINKER_SCRIPT_NAME ${RAW_LINKER_SCRIPT_PATHS} NAME)
+    get_filename_component(LINKER_SCRIPT_NAME ${CUSTOM_LINKER_SCRIPT_PATH} NAME)
+
+    message("linker scipt name:  " ${LINKER_SCRIPT_NAME} ": " ${linker_defs_response_file})
+
+    add_custom_command(
+        OUTPUT
+            ${CUSTOM_LINKER_SCRIPT_PATH}
+        PRE_LINK
+        COMMAND
+            ${CMAKE_C_COMPILER} @${linker_defs_response_file}
+            -E -x assembler-with-cpp
+            -include ${CMAKE_BINARY_DIR}/mbed-os/mbed-target-config.h
+            -P ${RAW_LINKER_SCRIPT_PATHS}
+            -o ${CUSTOM_LINKER_SCRIPT_PATH}
+        DEPENDS
+            ${RAW_LINKER_SCRIPT_PATHS}
+            ${linker_defs_response_file}
+            ${target_defines_header}
+        WORKING_DIRECTORY
+            ${CMAKE_CURRENT_SOURCE_DIR}
+        COMMENT
+            "Preprocess custom linker script: ${RAW_LINKER_SCRIPT_NAME} -> ${LINKER_SCRIPT_NAME}"
+        VERBATIM
+    )
+
+    # The job to create the linker script gets attached to the mbed-linker-script target,
+    # which is then added as a dependency of the MCU target.  This ensures the linker script will exist
+    # by the time we need it.
+    add_custom_target(mbed-custom-linker-script DEPENDS ${CUSTOM_LINKER_SCRIPT_PATH} VERBATIM)
+    foreach(TARGET mbed-baremetal mbed-os)
+        add_dependencies(${TARGET} mbed-custom-linker-script)
+
+        # Add linker flags to the MCU target to pick up the preprocessed linker script
+        target_link_options(${TARGET}
+            INTERFACE
+                "-T" "${CUSTOM_LINKER_SCRIPT_PATH}"
+        )
+    endforeach()
+
+
+endfunction(mbed_set_custom_linker_script)
