@@ -110,7 +110,6 @@ macro(remove_flag_from_target _target _flag)
     endif()
 endmacro()
 
-
 #
 # Change the linker script to a custom supplied script instead of the built in.
 #
@@ -135,8 +134,8 @@ function(mbed_set_custom_linker_script target new_linker_script_path)
     message("linker scipt name:  " ${LINKER_SCRIPT_NAME} ": " ${linker_defs_response_file})
 
     add_custom_command(
-        OUTPUT
-            ${CUSTOM_LINKER_SCRIPT_PATH}
+        TARGET
+            ${target}
         PRE_LINK
         COMMAND
             ${CMAKE_C_COMPILER} @${linker_defs_response_file}
@@ -158,27 +157,27 @@ function(mbed_set_custom_linker_script target new_linker_script_path)
     # The job to create the linker script gets attached to the mbed-linker-script target,
     # which is then added as a dependency of the MCU target.  This ensures the linker script will exist
     # by the time we need it.
-    add_custom_target(mbed-custom-linker-script DEPENDS ${CUSTOM_LINKER_SCRIPT_PATH} VERBATIM)
-    foreach(TARGET mbed-baremetal mbed-os)
-        add_dependencies(${TARGET} mbed-custom-linker-script)
+    # foreach(TARGET mbed-baremetal mbed-os)
+    #     # remove default linker script 
+    #     get_target_property(linker_script_path ${TARGET} LINKER_SCRIPT_PATH)
+    #     message("LINKER_SCRIPT_PATH: " ${linker_script_path})
+    #     remove_flag_from_target(${TARGET} "-T")
+    #     remove_flag_from_target(${TARGET} "${linker_script_path}")
+    # endforeach()
 
-        # remove default linker script 
-        get_target_property(linker_script_path ${TARGET} LINKER_SCRIPT_PATH)
-        message("LINKER_SCRIPT_PATH: " ${linker_script_path})
-        remove_flag_from_target(${TARGET} "-T")
-        remove_flag_from_target(${TARGET} "${linker_script_path}")
-        
-        # Add linker flags to the MCU target to pick up the preprocessed linker script
-        target_link_options(${TARGET}
-            INTERFACE
-                "-T" "${CUSTOM_LINKER_SCRIPT_PATH}"
-        )
+    # Add linker flags to the MCU target to pick up the preprocessed linker script
+    # add_custom_target(mbed-custom-linker-script DEPENDS ${CUSTOM_LINKER_SCRIPT_PATH} VERBATIM)
+    # add_dependencies(${target} mbed-custom-linker-script)
+    target_link_options(${target}
+        PRIVATE
+            "-T" "${CUSTOM_LINKER_SCRIPT_PATH}"
+    )
 
-        # print resulting link options
-        get_target_property(INTERFACE_LINK_OPTIONS ${TARGET} INTERFACE_LINK_OPTIONS)
-        message("INTERFACE_LINK_OPTIONS in ${TARGET}: " ${INTERFACE_LINK_OPTIONS})
-    endforeach()
-
+    # print resulting link options
+    get_target_property(INTERFACE_LINK_OPTIONS mbed-os-nolink INTERFACE_LINK_OPTIONS)
+    message("INTERFACE_LINK_OPTIONS in mbed-os-nolink: " ${INTERFACE_LINK_OPTIONS})
+    get_target_property(LINK_OPTIONS ${target} LINK_OPTIONS)
+    message("LINK_OPTIONS in ${target}: " ${LINK_OPTIONS})
 
 
 endfunction(mbed_set_custom_linker_script)
