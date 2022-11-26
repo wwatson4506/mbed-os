@@ -89,26 +89,13 @@ endfunction()
 function(mbed_set_post_build target)
 
     if("${ARGN}" STREQUAL "")
-        # version 1
-
-        # get_target_property(LINKER_SCRIPT_PATH mbed-os LINKER_SCRIPT_PATH)
-        # message("${target} uses default linker script ${LINKER_SCRIPT_PATH}")
-        # target_link_options(${target}
-        #     PRIVATE
-        #         "-T" "${LINKER_SCRIPT_PATH}"
-        # )
-
-        # version 2
-        foreach(TARGET mbed-baremetal mbed-os)
-            get_target_property(LINKER_SCRIPT_PATH mbed-os LINKER_SCRIPT_PATH)
-            message("${TARGET} uses default linker script ${LINKER_SCRIPT_PATH}")
-            target_link_options(${TARGET}
-                INTERFACE
-                    "-T" "${LINKER_SCRIPT_PATH}"
-            )
-        endforeach()
+        get_target_property(LINKER_SCRIPT_PATH mbed-os LINKER_SCRIPT_PATH)
+        target_link_options(${target}
+            PRIVATE
+                "-T" "${LINKER_SCRIPT_PATH}"
+        )
     else()
-        message("${target} uses custom linker script  ${ARGV2}")
+        message(STATUS "${target} uses custom linker script  ${ARGV2}")
         mbed_set_custom_linker_script(${target} ${ARGV2})
     endif()
 

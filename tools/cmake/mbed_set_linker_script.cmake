@@ -83,12 +83,6 @@ function(mbed_setup_linker_script mbed_os_target mbed_baremetal_target target_de
 
         # store LINKER_SCRIPT_PATH
         set_target_properties(${TARGET} PROPERTIES LINKER_SCRIPT_PATH  ${LINKER_SCRIPT_PATH})
-
-        # Add linker flags to the MCU target to pick up the preprocessed linker script
-        # target_link_options(${TARGET}
-        #     INTERFACE
-        #         "-T" "${LINKER_SCRIPT_PATH}"
-        # )
     endforeach()
 
 endfunction(mbed_setup_linker_script)
@@ -96,7 +90,7 @@ endfunction(mbed_setup_linker_script)
 
 #
 # Change the linker script to a custom supplied script instead of the built in.
-#  using the custom linker script requires mbed-os-nolink library
+# this function is called by mbed_set_post_build(target linker_script)
 #
 # target: CMake target for Mbed OS
 # new_linker_script_path: raw linker script
@@ -135,9 +129,7 @@ function(mbed_set_custom_linker_script target new_linker_script_path)
         VERBATIM
     )
 
-    # Add linker flags to the MCU target to pick up the preprocessed linker script
-    # add_custom_target(mbed-custom-linker-script DEPENDS ${CUSTOM_LINKER_SCRIPT_PATH} VERBATIM)
-    # add_dependencies(${target} mbed-custom-linker-script)
+    # Add linker flags to the target to pick up the preprocessed linker script
     target_link_options(${target}
         PRIVATE
             "-T" "${CUSTOM_LINKER_SCRIPT_PATH}"
