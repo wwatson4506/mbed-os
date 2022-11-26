@@ -89,7 +89,13 @@ endfunction()
 function(mbed_set_post_build target)
 
     if("${ARGN}" STREQUAL "")
-        get_target_property(LINKER_SCRIPT_PATH mbed-os LINKER_SCRIPT_PATH)
+        if(TARGET mbed-os)
+            get_target_property(LINKER_SCRIPT_PATH mbed-os LINKER_SCRIPT_PATH)
+            message("mbed-os LINKER_SCRIPT_PATH : ${LINKER_SCRIPT_PATH}")
+        elseif(TARGET mbed-baremetal)
+            get_target_property(LINKER_SCRIPT_PATH mbed-baremetal LINKER_SCRIPT_PATH)
+            message("mbed-baremetal LINKER_SCRIPT_PATH : ${LINKER_SCRIPT_PATH}")
+        endif()
         target_link_options(${target}
             PRIVATE
                 "-T" "${LINKER_SCRIPT_PATH}"
