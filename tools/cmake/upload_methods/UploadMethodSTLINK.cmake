@@ -35,12 +35,10 @@ function(gen_upload_target TARGET_NAME BIN_FILE)
 	add_dependencies(flash-${TARGET_NAME} ${TARGET_NAME})
 endfunction(gen_upload_target)
 
-### Function to generate debug target
-add_custom_target(gdbserver
-	COMMENT "Starting st-util GDB server"
-	COMMAND
+### Commands to run the debug server.
+set(UPLOAD_GDBSERVER_DEBUG_COMMAND
 	${st-util_PATH}
 	${STLINK_SERIAL_ARGUMENT}
 	${STLINK_ARGS}
-	--listen_port=${GDB_PORT}
-	USES_TERMINAL)
+	--no-reset
+	--listen_port=${GDB_PORT})

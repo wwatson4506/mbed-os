@@ -41,10 +41,8 @@ function(gen_upload_target TARGET_NAME BIN_FILE)
 	add_dependencies(flash-${TARGET_NAME} ${TARGET_NAME})
 endfunction(gen_upload_target)
 
-### Function to generate debug target
-add_custom_target(gdbserver
-	COMMENT "Starting pyOCD GDB server"
-	COMMAND
+### Commands to run the debug server.
+set(UPLOAD_GDBSERVER_DEBUG_COMMAND
 	${Python3_EXECUTABLE}
 	-m pyocd
 	gdbserver
@@ -54,6 +52,4 @@ add_custom_target(gdbserver
 	${PYOCD_PROBE_ARGS}
 	-f ${PYOCD_CLOCK_SPEED}
 	-p ${GDB_PORT}
-	--persist
-	--semihosting
-	USES_TERMINAL)
+	--semihosting)

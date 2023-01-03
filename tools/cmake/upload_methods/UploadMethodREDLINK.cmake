@@ -57,26 +57,23 @@ function(gen_upload_target TARGET_NAME BIN_FILE HEX_FILE)
 
 endfunction(gen_upload_target)
 
-### Function to generate debug target
-add_custom_target(gdbserver
-	COMMENT "Starting Redlink GDB server"
-	COMMAND
-		${crt_emu_cm_redlink_PATH}
-		-p ${REDLINK_PART_NUMBER}
-		--flash-hashing
-		-x ${REDLINK_PART_XML_DIR}
-		--flash-dir ${REDLINK_FLASH_LOADER_PATH}
-		-g
-		-s ${REDLINK_CLOCK_SPEED}
-		-2
-		${REDLINK_CONNECT_ARGS}
-		${REDLINK_PROBE_ARGS}
-		--server :${GDB_PORT}
-		--vc
-		--connect-reset system
-		--kill-server # Because redlink seems to not handle Ctrl-C, we use this to close it when GDB exits
-	USES_TERMINAL
-	VERBATIM)
+### Commands to run the debug server.
+set(UPLOAD_GDBSERVER_DEBUG_COMMAND
+	${crt_emu_cm_redlink_PATH}
+	-p ${REDLINK_PART_NUMBER}
+	--flash-hashing
+	-x ${REDLINK_PART_XML_DIR}
+	--flash-dir ${REDLINK_FLASH_LOADER_PATH}
+	-g
+	-s ${REDLINK_CLOCK_SPEED}
+	-2
+	${REDLINK_CONNECT_ARGS}
+	${REDLINK_PROBE_ARGS}
+	--server :${GDB_PORT}
+	--vc
+	--connect-reset system # No way is known to reset the device using monitor commands, so we have to reset on connect
+	--kill-server # Close Redlink when GDB exits
+)
 
 
 # request extended-remote GDB sessions

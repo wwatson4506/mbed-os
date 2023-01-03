@@ -14,6 +14,11 @@ set(UPLOAD_METHOD "${UPLOAD_METHOD_DEFAULT}" CACHE STRING "Method for uploading 
 # use a higher numbered port to allow use without root on Linux/Mac
 set(GDB_PORT 23331 CACHE STRING "Port that the GDB server will be started on.")
 
+# Load the upload method.  This is expected to set the following variables:
+# UPLOAD_${UPLOAD_METHOD}_FOUND - True iff the dependencies for this upload method were found
+# UPLOAD_SUPPORTS_DEBUG - True iff this upload method supports debugging
+# UPLOAD_GDBSERVER_DEBUG_COMMAND - Command to start a new GDB server
+# UPLOAD_WANTS_EXTENDED_REMOTE - True iff GDB should use "target extended-remote" to connect to the GDB server
 include(UploadMethod${UPLOAD_METHOD})
 
 if(NOT "${UPLOAD_${UPLOAD_METHOD}_FOUND}")

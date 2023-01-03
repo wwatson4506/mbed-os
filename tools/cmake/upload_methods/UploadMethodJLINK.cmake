@@ -37,18 +37,17 @@ exit
 		-JTAGConf -1,-1
 		-AutoConnect 1
 		-ExitOnError
-		-CommandFile ${COMMAND_FILE_PATH}
-		VERBATIM)
+		-CommandFile ${COMMAND_FILE_PATH})
 
 
 	add_dependencies(flash-${TARGET_NAME} ${TARGET_NAME})
 
 endfunction(gen_upload_target)
 
-### Function to generate debug target
-add_custom_target(gdbserver
-	COMMENT "Starting J-Link GDB server"
-	COMMAND
+### Commands to run the debug server.
+# Note: Command-line options for the GDB server are documented on the wiki here:
+# https://wiki.segger.com/J-Link_GDB_Server:#Command_line_options
+set(UPLOAD_GDBSERVER_DEBUG_COMMAND
 	"${JLINK_GDBSERVER}"
 	-Select USB
 	-Device ${JLINK_CPU_NAME}
@@ -59,5 +58,7 @@ add_custom_target(gdbserver
 	-LocalhostOnly
 	-noIR
 	-port ${GDB_PORT}
-	USES_TERMINAL
-	VERBATIM)
+	-singlerun # Terminate GDB server after GDB disconnects
+	-noreset # Don't reset during startup, GDB will decide that.
+	)
+
