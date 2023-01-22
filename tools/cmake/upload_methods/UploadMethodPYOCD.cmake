@@ -46,10 +46,18 @@ set(UPLOAD_GDBSERVER_DEBUG_COMMAND
 	${Python3_EXECUTABLE}
 	-m pyocd
 	gdbserver
-	-v
 	--no-wait
 	-t ${PYOCD_TARGET_NAME}
 	${PYOCD_PROBE_ARGS}
 	-f ${PYOCD_CLOCK_SPEED}
-	-p ${GDB_PORT}
-	--semihosting)
+	-p ${GDB_PORT})
+
+# Reference: https://github.com/Marus/cortex-debug/blob/056c03f01e008828e6527c571ef5c9adaf64083f/src/pyocd.ts#L40
+set(UPLOAD_LAUNCH_COMMANDS
+"monitor reset halt"
+"load"
+"break main"
+)
+set(UPLOAD_RESTART_COMMANDS
+"monitor reset"
+)
