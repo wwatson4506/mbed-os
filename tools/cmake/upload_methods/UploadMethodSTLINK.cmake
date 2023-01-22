@@ -36,9 +36,22 @@ function(gen_upload_target TARGET_NAME BIN_FILE)
 endfunction(gen_upload_target)
 
 ### Commands to run the debug server.
+set(UPLOAD_WANTS_EXTENDED_REMOTE TRUE)
 set(UPLOAD_GDBSERVER_DEBUG_COMMAND
 	${st-util_PATH}
 	${STLINK_SERIAL_ARGUMENT}
 	${STLINK_ARGS}
-	--no-reset
-	--listen_port=${GDB_PORT})
+	--listen_port=${GDB_PORT}
+	--multi)
+
+# Reference: https://github.com/Marus/cortex-debug/blob/056c03f01e008828e6527c571ef5c9adaf64083f/src/stutil.ts#L39
+set(UPLOAD_LAUNCH_COMMANDS
+	"monitor halt"
+	"monitor reset"
+	"load"
+	"break main"
+	"monitor reset"
+)
+set(UPLOAD_RESTART_COMMANDS
+	"monitor reset"
+)
