@@ -65,3 +65,18 @@ set(UPLOAD_GDBSERVER_DEBUG_COMMAND
 
 # request extended-remote GDB sessions
 set(UPLOAD_WANTS_EXTENDED_REMOTE TRUE)
+
+# Reference: https://github.com/Marus/cortex-debug/blob/056c03f01e008828e6527c571ef5c9adaf64083f/src/openocd.ts#L100
+set(UPLOAD_LAUNCH_COMMANDS
+	"monitor reset halt"
+	"load"
+	"break main"
+	"monitor reset halt"
+)
+set(UPLOAD_RESTART_COMMANDS
+	"monitor reset halt"
+
+	# The following will force an sync between gdb and openocd
+	"monitor gdb_sync"
+	"stepi"
+)
