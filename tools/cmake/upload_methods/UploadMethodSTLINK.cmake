@@ -45,6 +45,7 @@ set(UPLOAD_GDBSERVER_DEBUG_COMMAND
 	--multi)
 
 # Reference: https://github.com/Marus/cortex-debug/blob/056c03f01e008828e6527c571ef5c9adaf64083f/src/stutil.ts#L39
+# (except I had to change target-download to load for some reason)
 set(UPLOAD_LAUNCH_COMMANDS
 	"monitor halt"
 	"monitor reset"

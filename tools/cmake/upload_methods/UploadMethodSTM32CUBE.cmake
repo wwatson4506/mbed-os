@@ -54,4 +54,16 @@ set(UPLOAD_GDBSERVER_DEBUG_COMMAND
 	${STM32CUBE_GDBSERVER_ARGS}
 	-cp "${CUBE_PROG_DIR}"
 	-p ${GDB_PORT}
+	--halt
 	${STM32CUBE_GDB_PROBE_ARGS})
+
+# Reference: https://github.com/Marus/cortex-debug/blob/056c03f01e008828e6527c571ef5c9adaf64083f/src/stlink.ts#L113
+set(UPLOAD_LAUNCH_COMMANDS
+	"monitor reset"
+	"load"
+	"break main"
+	"monitor reset"
+)
+set(UPLOAD_RESTART_COMMANDS
+	"monitor reset"
+)
