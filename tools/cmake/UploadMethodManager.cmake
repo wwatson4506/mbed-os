@@ -34,7 +34,7 @@ endif()
 
 if(UPLOAD_SUPPORTS_DEBUG)
 	message(STATUS "Mbed: Code upload and debugging enabled via upload method ${UPLOAD_METHOD}")
-elseif(NOT "${UPLOAD_METHOD}" STRQUAL "NONE")
+elseif(NOT "${UPLOAD_METHOD}" STREQUAL "NONE")
 	message(STATUS "Mbed: Code upload enabled via upload method ${UPLOAD_METHOD}")
 endif()
 
