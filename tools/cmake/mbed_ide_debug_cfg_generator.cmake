@@ -117,7 +117,7 @@ elseif(MBED_GENERATE_VS_CODE_DEBUG_CFGS)
 		# Schema for tasks.json can be seen here https://code.visualstudio.com/docs/editor/tasks-appendix
 		set(VSCODE_TASKS_JSON_PATH ${CMAKE_SOURCE_DIR}/.vscode/tasks.json)
 
-		# Convert the CMake list into a string format suitable for a json string.
+		# Convert the CMake list into the correct format for tasks.json
 		list(GET UPLOAD_GDBSERVER_DEBUG_COMMAND 0 GDBSERVER_EXECUTABLE)
 		list(SUBLIST UPLOAD_GDBSERVER_DEBUG_COMMAND 1 -1 GDBSERVER_ARGS)
 		set(GDBSERVER_ARGS_STR "")

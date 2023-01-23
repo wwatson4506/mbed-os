@@ -10,6 +10,8 @@
 # This method creates the following options:
 # REDLINK_PROBE_SN - Serial number of the debug probe to connect to.  If blank, will connect to any probe.
 
+set(UPLOAD_SUPPORTS_DEBUG TRUE)
+
 ### Handle options
 set(REDLINK_PROBE_SN "" CACHE STRING "Serial number of the debug probe to connect to for Redlink.  Set to empty to detect any matching adapter.")
 
@@ -71,10 +73,20 @@ set(UPLOAD_GDBSERVER_DEBUG_COMMAND
 	${REDLINK_PROBE_ARGS}
 	--server :${GDB_PORT}
 	--vc
-	--connect-reset system # No way is known to reset the device using monitor commands, so we have to reset on connect
+	--connect-reset system
 	--kill-server # Close Redlink when GDB exits
 )
 
 
 # request extended-remote GDB sessions
 set(UPLOAD_WANTS_EXTENDED_REMOTE TRUE)
+
+set(UPLOAD_LAUNCH_COMMANDS
+	"monitor reset" # undocumented, but works
+	"load"
+	"break main"
+	"monitor reset"
+)
+set(UPLOAD_RESTART_COMMANDS
+	"monitor reset"
+)
