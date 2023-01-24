@@ -38,9 +38,13 @@ elseif(NOT "${UPLOAD_METHOD}" STREQUAL "NONE")
 	message(STATUS "Mbed: Code upload enabled via upload method ${UPLOAD_METHOD}")
 endif()
 
-# UPLOAD_SUPPORTS_DEBUG needs to be made into a cache variable so that it can
+# These variables need to be made into a cache variables so that they can
 # be seen by higher level directories when they call mbed_generate_upload_debug_targets()
 set(MBED_UPLOAD_SUPPORTS_DEBUG ${UPLOAD_SUPPORTS_DEBUG} CACHE INTERNAL "" FORCE)
+set(MBED_UPLOAD_GDBSERVER_DEBUG_COMMAND ${UPLOAD_GDBSERVER_DEBUG_COMMAND} CACHE INTERNAL "" FORCE)
+set(MBED_UPLOAD_WANTS_EXTENDED_REMOTE ${UPLOAD_WANTS_EXTENDED_REMOTE} CACHE INTERNAL "" FORCE)
+set(MBED_UPLOAD_LAUNCH_COMMANDS ${UPLOAD_LAUNCH_COMMANDS} CACHE INTERNAL "" FORCE)
+set(MBED_UPLOAD_RESTART_COMMANDS ${UPLOAD_RESTART_COMMANDS} CACHE INTERNAL "" FORCE)
 
 # ----------------------------------------------
 # Function for creating targets
