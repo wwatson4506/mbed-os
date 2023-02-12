@@ -311,6 +311,14 @@ SECTIONS
 
   .ARM.attributes 0 : { *(.ARM.attributes) }
 
+  /* Teensy model identifier symbol (used by Teensy Loader) */
+  /* See here https://forum.pjrc.com/threads/72107-Testers-Needed-Mbed-OS-Port-for-Teensy-4-0?p=320414&viewfull=1#post320414 */
+#if defined(TARGET_TEENSY_40)
+	_teensy_model_identifier = 0x24;
+#elif defined(TARGET_TEENSY_41)
+	_teensy_model_identifier = 0x25;
+#endif
+
   ASSERT(__StackLimit >= __HeapLimit, "Stack, heap, and globals exceed main RAM size!")
 }
 

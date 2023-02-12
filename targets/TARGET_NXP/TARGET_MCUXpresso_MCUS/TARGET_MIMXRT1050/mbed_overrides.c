@@ -165,9 +165,7 @@ void mbed_sdk_init()
     BOARD_ConfigMPU();
 
 #if MBED_CONF_TARGET_ENABLE_OVERDRIVE_MODE
-    //BOARD_ClockFullSpeed();
     BOARD_ClockOverdrive();
-    //BOARD_ClockLowPower();
 #else
     BOARD_ClockFullSpeed();
 #endif
