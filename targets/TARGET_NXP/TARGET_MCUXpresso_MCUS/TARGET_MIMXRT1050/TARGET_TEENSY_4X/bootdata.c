@@ -1,3 +1,4 @@
+
 // This file is adapted from bootdata.c in the Teensy4 Arduino core.
 // https://github.com/PaulStoffregen/cores/blob/a2368ad57e9470608a234d942c55a2278c6cd72b/teensy4/bootdata.c
 // The only changes made were:
@@ -9,6 +10,8 @@
 /* Teensyduino Core Library
  * http://www.pjrc.com/teensy/
  * Copyright (c) 2017 PJRC.COM, LLC.
+ *
+ * SPDX-License-Identifier: MIT
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
